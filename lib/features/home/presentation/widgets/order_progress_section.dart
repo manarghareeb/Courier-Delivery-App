@@ -1,0 +1,92 @@
+import 'package:courier_delivery_app/core/theming/colors.dart';
+import 'package:courier_delivery_app/core/theming/styles.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+class OrderProgressSection extends StatelessWidget {
+  const OrderProgressSection({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: ColorManager.textFieldColor,
+        borderRadius: BorderRadius.circular(15.r),
+      ),
+      child: Padding(
+        padding: EdgeInsets.only(left: 8.w, right: 8.w, top: 3.h, bottom: 12.h),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Text(
+                  'Order Progress',
+                  style: TextStyles.font12BlackBoldNormal,
+                ),
+                const Spacer(),
+                IconButton(
+                  onPressed: () {},
+                  icon: Icon(Icons.arrow_forward, color: Colors.grey, size: 20.sp),
+                ),
+              ],
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
+              child: Row(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('ORDID: #1234567890', style: TextStyles.font14WhiteNormal.copyWith(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold
+                      ),),
+                      Text('Rider: Ahmed Ali', style: TextStyles.font12GreyNormalItalic,),
+                    ],
+                  ),
+                  const Spacer(),
+                  Text('In Progress', style: TextStyles.font10BlackW700Italic.copyWith(
+                    color: Colors.amber,
+                    fontStyle: FontStyle.normal
+                  ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 10.h),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
+              child: Row(
+                children: [
+                  Icon(FontAwesomeIcons.truck, color: ColorManager.mainColor,),
+                  SizedBox(width: 20.w),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(Icons.location_on, color: const Color.fromARGB(255, 35, 139, 39), size: 15,),
+                          SizedBox(width: 5.w),
+                          Text('Drop off', style: TextStyles.font10BlackW700Italic,),                      
+                        ],
+                      ),
+                      Text(
+                        '123 Salt Lake Sector V', 
+                        style: TextStyles.font12BlackBoldNormal,
+                      ),
+                      Text(
+                        '20 mins to delivery location', 
+                        style: TextStyles.font10BlackW700Italic,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
