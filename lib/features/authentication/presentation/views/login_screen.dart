@@ -25,6 +25,13 @@ class _LoginScreenState extends State<LoginScreen> {
   GlobalKey<FormState> passformKey = GlobalKey<FormState>();
 
   @override
+  void dispose() {
+    emailOrPhoneController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocConsumer<LoginCubit, AuthState>(
       listener: (context, state) {

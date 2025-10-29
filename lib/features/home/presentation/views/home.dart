@@ -9,14 +9,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HomeView extends StatefulWidget {
-  const HomeView({super.key});
+  const HomeView({super.key, this.initialIndex = 0});
+  final int initialIndex;
 
   @override
   State<HomeView> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeView> {
-  int index = 0;
+  late int index;
   List<Widget> screens = [
     const HomeScreen(),
     const PackagesScreen(),
@@ -24,6 +25,12 @@ class _HomeScreenState extends State<HomeView> {
     const CouriersScreen(),
     const AccountScreen(),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    index = widget.initialIndex; 
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -10,6 +10,7 @@ import 'package:courier_delivery_app/features/authentication/presentation/views/
 import 'package:courier_delivery_app/features/notifications/notifications_screen.dart';
 import 'package:courier_delivery_app/features/account/presentation/views/account_screen.dart';
 import 'package:courier_delivery_app/features/onboarding/onboarding_screen.dart';
+import 'package:courier_delivery_app/features/packages/presentation/views/packages_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
@@ -23,6 +24,7 @@ abstract class AppRouter {
   static final paymentMethodsScreen = '/paymentMethodsScreen';
   static final technicalSupportScreen = '/technicalSupportScreen';
   static final termsAndConditionsScreen = '/termsAndConditionsScreen';
+  static final packagesScreen = '/packagesScreen';
 
   static final route = GoRouter(
     routes: [
@@ -57,8 +59,15 @@ abstract class AppRouter {
         path: paymentMethodsScreen,
         builder: (context, state) => const PaymentMethodsScreen(),
       ),
-      GoRoute(path: technicalSupportScreen, builder: (context, state) => const TechnicalSupportScreen()),
-      GoRoute(path: termsAndConditionsScreen, builder: (context, state) => const TermsAndConditionsScreen()),
+      GoRoute(
+        path: technicalSupportScreen,
+        builder: (context, state) => const TechnicalSupportScreen(),
+      ),
+      GoRoute(
+        path: termsAndConditionsScreen,
+        builder: (context, state) => const TermsAndConditionsScreen(),
+      ),
+      GoRoute(path: packagesScreen, builder: (context, state) => const PackagesScreen(),),
     ],
   );
 }

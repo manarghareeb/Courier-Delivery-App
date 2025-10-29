@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 part 'delivery_state.dart';
 
 class DeliveryCubit extends Cubit<DeliveryState> {
-  DeliveryCubit() : super(DeliveryCubitInitial());
+  DeliveryCubit() : super(DeliveryInitial());
 
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   final FirebaseAuth auth = FirebaseAuth.instance;
@@ -15,12 +15,12 @@ class DeliveryCubit extends Cubit<DeliveryState> {
 
   void setDeliveryType(String value) {
     deliveryType = value;
-    emit(DeliveryTypeChanged(value));
+    emit(DeliveryTypeSelected(value));
   }
 
   void setPaymentMethod(String value) {
     paymentMethod = value;
-    emit(PaymentMethodChanged(value));
+    emit(PaymentMethodSelected(value));
   }
 
   Future<void> addDelivery(DeliveryModel delivery) async {
@@ -105,3 +105,52 @@ class DeliveryCubit extends Cubit<DeliveryState> {
     }
   }
 }
+
+/*
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:courier_delivery_app/features/deliveries/data/delivery_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+part 'delivery_state.dart';
+
+class DeliveryCubit extends Cubit<DeliveryState> {
+  DeliveryCubit() : super(DeliveryInitial());
+
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  final FirebaseAuth auth = FirebaseAuth.instance;
+
+  String? deliveryType;
+  String? paymentMethod;
+
+  void setDeliveryType(String type) {
+    deliveryType = type;
+    emit(DeliveryTypeSelected(type));
+  }
+
+  void setPaymentMethod(String method) {
+    paymentMethod = method;
+    emit(PaymentMethodSelected(method));
+  }
+
+  Future<void> addDelivery(DeliveryModel delivery) async {
+    emit(DeliveryLoading());
+    try {
+      final userId = auth.currentUser!.uid;
+      final userRef = firestore.collection('users').doc(userId);
+
+      // Create the delivery
+      final deliveryRef = await userRef.collection('deliveries').add(delivery.toJson());
+
+      // Update the delivery ID inside Firestore
+      await deliveryRef.update({'id': deliveryRef.id});
+
+      emit(DeliverySuccess());
+    } catch (e) {
+      emit(DeliveryError(e.toString()));
+    }
+  }
+  
+}
+*/
