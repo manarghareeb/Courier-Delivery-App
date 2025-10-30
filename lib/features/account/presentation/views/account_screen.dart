@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:courier_delivery_app/core/helpers/cache_helper.dart';
 import 'package:courier_delivery_app/core/routing/app_router.dart';
 import 'package:courier_delivery_app/core/theming/colors.dart';
@@ -62,10 +63,12 @@ class AccountScreen extends StatelessWidget {
                             try {
                               User? user = FirebaseAuth.instance.currentUser;
                               if (user != null) {
+                                final userId = user.uid;
+                                await FirebaseFirestore.instance.collection('users').doc(userId).delete();
                                 await user.delete();
+                                await CacheHelper.clearData();
+                                GoRouter.of(context).go(AppRouter.signUpScreen);
                               }
-                              await CacheHelper.clearData();
-                              GoRouter.of(context).go(AppRouter.signUpScreen);
                             } catch (e) {
                               print('Error deleting account: $e');
                               ScaffoldMessenger.of(context).showSnackBar(

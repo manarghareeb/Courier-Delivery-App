@@ -46,7 +46,15 @@ abstract class AppRouter {
             ),
       ),
       GoRoute(path: homeScreen, builder: (context, state) => HomeScreen()),
-      GoRoute(path: homeView, builder: (context, state) => HomeView()),
+      GoRoute(
+        path: homeView, 
+        name: AppRouter.homeView,
+        builder: (context, state) {
+          final index = state.extra as int? ?? 0;
+          return HomeView(initialIndex: index);
+        },
+        //builder: (context, state) => HomeView()
+      ),
       GoRoute(
         path: notificationsScreen,
         builder: (context, state) => const NotificationsScreen(),

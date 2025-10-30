@@ -3,7 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PackageInfoSection extends StatelessWidget {
-  const PackageInfoSection({super.key, required this.weightController, required this.weightKey, required this.sizeController, required this.sizeKey, required this.contentsController, required this.contentsKey});
+  const PackageInfoSection({
+    super.key,
+    required this.weightController,
+    required this.weightKey,
+    required this.sizeController,
+    required this.sizeKey,
+    required this.contentsController,
+    required this.contentsKey,
+  });
 
   final TextEditingController weightController;
   final GlobalKey<FormState> weightKey;
@@ -22,6 +30,12 @@ class PackageInfoSection extends StatelessWidget {
           textInputType: TextInputType.number,
           title: 'Weight',
           formKey: weightKey,
+          validator: (value) {
+            if (value!.isEmpty) {
+              return "Please enter package weight";
+            }
+            return null;
+          },
         ),
         SizedBox(height: 10.h),
         CustomTextFieldWidget(
@@ -30,6 +44,12 @@ class PackageInfoSection extends StatelessWidget {
           textInputType: TextInputType.text,
           title: 'Size',
           formKey: sizeKey,
+          validator: (value) {
+            if (value!.isEmpty) {
+              return "Please enter package size";
+            }
+            return null;
+          },
         ),
         SizedBox(height: 10.h),
         CustomTextFieldWidget(
@@ -38,6 +58,12 @@ class PackageInfoSection extends StatelessWidget {
           textInputType: TextInputType.text,
           title: 'Contents',
           formKey: contentsKey,
+          validator: (value) {
+            if (value!.isEmpty) {
+              return "Please enter package contents";
+            }
+            return null;
+          },
         ),
       ],
     );

@@ -20,64 +20,22 @@ class PackageCubit extends Cubit<PackageState> {
         return;
       }
 
-      final querySnapshot = await firestore
-          .collection('users')
-          .doc(userId)
-          .collection('deliveries')
-          .get();
+      final querySnapshot =
+          await firestore
+              .collection('users')
+              .doc(userId)
+              .collection('deliveries')
+              .get();
 
-      final packages = querySnapshot.docs.map((doc) {
-        final data = doc.data();
-        return DeliveryModel.fromMap(data, doc.id);
-      }).toList();
+      final packages =
+          querySnapshot.docs.map((doc) {
+            final data = doc.data();
+            return DeliveryModel.fromMap(data, doc.id);
+          }).toList();
 
       emit(PackageSuccess(packages));
     } catch (e) {
       emit(PackageError(e.toString()));
     }
   }
-  /*Future<void> loadPackages() async {
-    emit(PackageLoading());
-    try {
-      final user = auth.currentUser;
-      if (user == null) {
-        emit(PackageError('User not logged in'));
-        return;
-      }
-
-      final snapshot =
-          await firestore
-              .collection('users')
-              .doc(user.uid)
-              .collection('deliveries')
-              .get();
-
-      final pending = <Map<String, dynamic>>[];
-      final inTransit = <Map<String, dynamic>>[];
-      final delivered = <Map<String, dynamic>>[];
-
-      for (var doc in snapshot.docs) {
-        final data = doc.data();
-        final status = data['status'] ?? 'Pending';
-
-        if (status == 'Pending') {
-          pending.add(data);
-        } else if (status == 'In Transit') {
-          inTransit.add(data);
-        } else if (status == 'Delivered') {
-          delivered.add(data);
-        }
-      }
-
-      emit(
-        PackageSuccess(
-          pending: pending,
-          inTransit: inTransit,
-          delivered: delivered,
-        ),
-      );
-    } catch (e) {
-      emit(PackageError(e.toString()));
-    }
-  }*/
 }

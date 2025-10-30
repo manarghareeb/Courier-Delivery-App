@@ -41,10 +41,8 @@ class _DeliveriesScreenState extends State<DeliveriesScreen> {
   TextEditingController locationController = TextEditingController();
   final locationKey = GlobalKey<FormState>();
 
-  final TextEditingController pickupLocationController =
-      TextEditingController();
-  final TextEditingController dropOffLocationController =
-      TextEditingController();
+  final TextEditingController pickupLocationController = TextEditingController();
+  final TextEditingController dropOffLocationController = TextEditingController();
   final pickupLocationKey = GlobalKey<FormState>();
   final dropOffLocationKey = GlobalKey<FormState>();
 

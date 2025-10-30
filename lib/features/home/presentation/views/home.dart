@@ -4,6 +4,7 @@ import 'package:courier_delivery_app/features/deliveries/presentation/views/deli
 import 'package:courier_delivery_app/features/home/presentation/views/home_screen.dart';
 import 'package:courier_delivery_app/features/packages/presentation/views/packages_screen.dart';
 import 'package:courier_delivery_app/features/account/presentation/views/account_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -17,6 +18,8 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeView> {
+  final userId = FirebaseAuth.instance.currentUser!.uid;
+
   late int index;
   List<Widget> screens = [
     const HomeScreen(),
@@ -31,6 +34,24 @@ class _HomeScreenState extends State<HomeView> {
     super.initState();
     index = widget.initialIndex; 
   }
+  /*late int index;
+  late List<Widget> screens;
+  late String userId;
+
+  @override
+  void initState() {
+    super.initState();
+    index = widget.initialIndex;
+    userId = FirebaseAuth.instance.currentUser!.uid;
+    screens = [
+      const HomeScreen(),
+      const PackagesScreen(),
+      const DeliveriesScreen(),
+      CouriersScreen(userId: userId),
+      const AccountScreen(),
+    ];
+  }*/
+
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +87,7 @@ class _HomeScreenState extends State<HomeView> {
           ),
           BottomNavigationBarItem(
             icon: Icon(FontAwesomeIcons.solidUser, size: 21.sp),
-            label: 'Profile',
+            label: 'Account',
           ),
         ],
       ),
