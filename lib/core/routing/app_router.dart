@@ -3,6 +3,7 @@ import 'package:courier_delivery_app/features/account/presentation/views/technic
 import 'package:courier_delivery_app/features/account/presentation/views/terms_conditions_screen.dart';
 import 'package:courier_delivery_app/features/authentication/cubit/login_cubit.dart';
 import 'package:courier_delivery_app/features/authentication/cubit/signup_cubit.dart';
+import 'package:courier_delivery_app/features/authentication/presentation/views/forget_password_screen.dart';
 import 'package:courier_delivery_app/features/home/presentation/views/home.dart';
 import 'package:courier_delivery_app/features/home/presentation/views/home_screen.dart';
 import 'package:courier_delivery_app/features/authentication/presentation/views/login_screen.dart';
@@ -25,6 +26,7 @@ abstract class AppRouter {
   static final technicalSupportScreen = '/technicalSupportScreen';
   static final termsAndConditionsScreen = '/termsAndConditionsScreen';
   static final packagesScreen = '/packagesScreen';
+  static final forgetPasswordScreen = '/forgetPasswordScreen';
 
   static final route = GoRouter(
     routes: [
@@ -45,9 +47,10 @@ abstract class AppRouter {
               child: SignUpScreen(),
             ),
       ),
+      GoRoute(path: forgetPasswordScreen, builder: (context, state) => ForgetPasswordScreen()),
       GoRoute(path: homeScreen, builder: (context, state) => HomeScreen()),
       GoRoute(
-        path: homeView, 
+        path: homeView,
         name: AppRouter.homeView,
         builder: (context, state) {
           final index = state.extra as int? ?? 0;
@@ -75,7 +78,10 @@ abstract class AppRouter {
         path: termsAndConditionsScreen,
         builder: (context, state) => const TermsAndConditionsScreen(),
       ),
-      GoRoute(path: packagesScreen, builder: (context, state) => const PackagesScreen(),),
+      GoRoute(
+        path: packagesScreen,
+        builder: (context, state) => const PackagesScreen(),
+      ),
     ],
   );
 }

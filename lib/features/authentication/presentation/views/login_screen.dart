@@ -41,7 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
           );
         }
         if (state is LoginSuccess) {
-          GoRouter.of(context).push(AppRouter.homeView);  
+          GoRouter.of(context).push(AppRouter.homeView);
         }
       },
       builder: (context, state) {
@@ -51,7 +51,10 @@ class _LoginScreenState extends State<LoginScreen> {
             body: SafeArea(
               child: SingleChildScrollView(
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 40.0.h),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 16.w,
+                    vertical: 40.0.h,
+                  ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -106,6 +109,33 @@ class _LoginScreenState extends State<LoginScreen> {
                           return null;
                         },
                       ),
+                      SizedBox(height: 10.h),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          TextButton(
+                            onPressed: () {
+                              GoRouter.of(
+                                context,
+                              ).push(AppRouter.forgetPasswordScreen);
+                            },
+                            style: TextButton.styleFrom(
+                              padding: EdgeInsets.zero,
+                              minimumSize: Size(0, 0),
+                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              splashFactory: NoSplash.splashFactory,
+                              foregroundColor: Colors.transparent,
+                            ),
+                            clipBehavior: Clip.none,
+                            child: Text(
+                              'Forget Password',
+                              style: TextStyles.font32MainColorBold.copyWith(
+                                fontSize: 12.sp,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                       SizedBox(height: 40.h),
                       CustomButtonWidget(
                         buttonText: 'Login',
@@ -113,8 +143,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           if (emailformKey.currentState!.validate() &&
                               passformKey.currentState!.validate()) {
                             final loginCubit = context.read<LoginCubit>();
-                            loginCubit.email.text = emailOrPhoneController.text.trim();
-                            loginCubit.password.text = passwordController.text.trim();
+                            loginCubit.email.text =
+                                emailOrPhoneController.text.trim();
+                            loginCubit.password.text =
+                                passwordController.text.trim();
                             loginCubit.loginAccount();
                           }
                         },
