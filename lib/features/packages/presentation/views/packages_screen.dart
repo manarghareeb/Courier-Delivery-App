@@ -22,7 +22,7 @@ class _PackagesScreenState extends State<PackagesScreen>
   @override
   void initState() {
     super.initState();
-    tabController = TabController(length: 4, vsync: this);
+    tabController = TabController(length: 5, vsync: this);
     context.read<PackageCubit>().fetchPackages();
   }
 
@@ -83,8 +83,9 @@ class _PackagesScreenState extends State<PackagesScreen>
           tabs: const [
             Tab(text: 'All'),
             Tab(text: 'Pending'),
-            Tab(text: 'Delivered'),
             Tab(text: 'In Progress'),
+            Tab(text: 'Delivered'),
+            Tab(text: 'Cancelled'),
           ],
         ),
       ),
@@ -116,12 +117,17 @@ class _PackagesScreenState extends State<PackagesScreen>
                 ),
                 PackageListWidget(
                   packages: packages,
+                  filter: 'In Progress',
+                  onPackageTap: openPackageDetails,
+                ),
+                PackageListWidget(
+                  packages: packages,
                   filter: 'Delivered',
                   onPackageTap: openPackageDetails,
                 ),
                 PackageListWidget(
                   packages: packages,
-                  filter: 'In Progress',
+                  filter: 'Cancelled',
                   onPackageTap: openPackageDetails,
                 ),
               ],
