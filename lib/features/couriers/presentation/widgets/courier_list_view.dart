@@ -4,12 +4,12 @@ import 'package:courier_delivery_app/core/theming/colors.dart';
 import 'package:courier_delivery_app/core/theming/styles.dart';
 import 'package:courier_delivery_app/features/deliveries/data/delivery_model.dart';
 
-class PackageListWidget extends StatelessWidget {
+class CourierListView extends StatelessWidget {
   final List<DeliveryModel> packages;
   final String filter;
   final Function(DeliveryModel) onPackageTap;
 
-  const PackageListWidget({
+  const CourierListView({
     super.key,
     required this.packages,
     required this.filter,
@@ -22,9 +22,7 @@ class PackageListWidget extends StatelessWidget {
     if (filter == 'All') {
       filtered = packages;
     } else {
-      filtered = packages
-        .where((p) => p.status.toLowerCase() == filter.toLowerCase())
-        .toList();
+      filtered = packages.where((p) => p.status == filter).toList();
     }
 
     if (filtered.isEmpty) {

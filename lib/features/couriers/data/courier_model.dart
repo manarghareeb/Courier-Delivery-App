@@ -1,38 +1,33 @@
+import 'package:courier_delivery_app/features/deliveries/data/delivery_model.dart';
+
 class CourierModel {
   final String id;
-  final String name;
-  final String status;
+  final DeliveryModel deliveryId;
   final double rating;
-  final String estimatedTime;
-  final List<String> assignedDeliveries; 
+  final double estimatedTime;
 
   CourierModel({
     required this.id,
-    required this.name,
-    required this.status,
-    this.rating = 0.0,
-    this.estimatedTime = '',
-    this.assignedDeliveries = const [],
+    required this.deliveryId,
+    required this.rating,
+    required this.estimatedTime,
   });
 
   factory CourierModel.fromMap(Map<String, dynamic> map, String docId) {
     return CourierModel(
       id: docId,
-      name: map['name'] ?? '',
-      status: map['status'] ?? 'Available',
-      rating: (map['rating'] ?? 0).toDouble(),
-      estimatedTime: map['estimatedTime'] ?? '',
-      assignedDeliveries: List<String>.from(map['assignedDeliveries'] ?? []),
+      deliveryId: map['deliveryId'] ,
+      rating: (map['rating']).toDouble(),
+      estimatedTime: (map['estimatedTime']).toDouble(),
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'name': name,
-      'status': status,
+      'id': id,
+      'deliveryId': deliveryId,
       'rating': rating,
       'estimatedTime': estimatedTime,
-      'assignedDeliveries': assignedDeliveries,
     };
   }
 }

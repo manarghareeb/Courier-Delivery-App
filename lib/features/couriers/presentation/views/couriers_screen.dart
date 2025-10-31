@@ -1,8 +1,7 @@
 import 'package:courier_delivery_app/core/theming/colors.dart';
 import 'package:courier_delivery_app/core/theming/styles.dart';
-import 'package:courier_delivery_app/features/couriers/cubit/courier_cubit.dart';
-import 'package:courier_delivery_app/features/couriers/cubit/courier_state.dart';
 import 'package:courier_delivery_app/features/couriers/presentation/views/courier_details_screen.dart';
+import 'package:courier_delivery_app/features/packages/cubit/package_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -23,13 +22,6 @@ class _CouriersScreenState extends State<CouriersScreen> {
     {'name': 'Omar Mostafa', 'rating': 3.2},
     {'name': 'Salah Ibrahim', 'rating': 1.8},
   ];
-
-  /*final List<Map<String, dynamic>> couriers = const [
-    {'name': 'Ali Express', 'status': 'Available'},
-    {'name': 'FastGo', 'status': 'Busy'},
-    {'name': 'Speedy', 'status': 'Available'},
-    {'name': 'QuickShip', 'status': 'Available'},
-  ];*/
 
   @override
   Widget build(BuildContext context) {
@@ -108,24 +100,23 @@ class _CouriersScreenState extends State<CouriersScreen> {
                 },
               ),
             ),
-            Expanded(
-              child: BlocConsumer<CourierCubit, CourierState>(
-                listener: (context, state) {
-                  if (state is CourierError) {
-                    ScaffoldMessenger.of(
-                      context,
-                    ).showSnackBar(SnackBar(content: Text(state.message)));
-                  }
-                },
-                builder: (context, state) {
-                  if (state is CourierLoading) {
-                    return const Center(child: CircularProgressIndicator());
-                  } else if (state is CourierSuccess) {
-                    final couriers = state.couriers;
-                    return ListView.builder(
-                      itemCount: couriers.length,
+            BlocConsumer<PackageCubit, PackageState>(
+              listener: (context, state) {
+                if (state is PackageError) {
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(SnackBar(content: Text(state.message)));
+                }
+              },
+              builder: (context, state) {
+                if (state is PackageLoading) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (state is PackageSuccess) {
+                  return Expanded(
+                    child: ListView.builder(
+                      itemCount: state.packages.length,
                       itemBuilder: (context, index) {
-                        final courier = couriers[index];
+                        final package = state.packages[index];
                         return Card(
                           margin: EdgeInsets.symmetric(
                             horizontal: 12.w,
@@ -137,35 +128,32 @@ class _CouriersScreenState extends State<CouriersScreen> {
                           child: ListTile(
                             tileColor: ColorManager.textFieldColor,
                             title: Text(
-                              courier.name,
+                              package.id,
                               style: TextStyles.font16WhiteW600.copyWith(
                                 color: Colors.black,
                               ),
                             ),
-                            subtitle: Text(
-                              'Status: ${courier.status}',
-                              style: TextStyles.font14GreyNormalItalic,
-                            ),
                             trailing: const Icon(Icons.arrow_forward_ios),
                             onTap: () {
+                              //final courier = featuredCouriers[index];
+                              /*GoRouter.of(context).push(
+                                AppRouter.courierDetailScreen,
+                                extra: package,
+                              );*/
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(
-                                  builder:
-                                      (_) =>
-                                          CourierDetailScreen(courier: courier),
-                                ),
+                                MaterialPageRoute(builder: (_) => CourierDetailScreen(package: package)),
                               );
                             },
                           ),
                         );
                       },
-                    );
-                  } else {
-                    return const Center(child: Text('No couriers found.'));
-                  }
-                },
-              ),
+                    ),
+                  );
+                } else {
+                  return const Center(child: Text('No Coureirs found.'));
+                }
+              },
             ),
           ],
         ),
