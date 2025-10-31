@@ -37,7 +37,12 @@ class SignupCubit extends Cubit<AuthState> {
       );
 
       await users.doc(uid).set(userModel.toMap());
-      //await users.add(userModel.toMap());
+
+      await users.doc(uid).collection('notifications').add({
+        'title': 'Welcome 🎉',
+        'body': 'Thanks for joining us, ${name.text}!',
+        'createdAt': FieldValue.serverTimestamp(),
+      });
 
       emit(SignUpSuccess());
       log("Account created successfully for ${email.text}");

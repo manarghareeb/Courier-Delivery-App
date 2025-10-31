@@ -27,14 +27,23 @@ class DeliveryCubit extends Cubit<DeliveryState> {
     emit(DeliveryLoading());
     try {
       final userId = delivery.userId;
-      // generate id
       final docRef = await firestore
           .collection('users')
           .doc(userId)
           .collection('deliveries')
           .add(delivery.toJson());
       final deliveryWithId = delivery.copyWith(id: docRef.id);
-      // save in firestore
+
+      await firestore
+        .collection('users')
+        .doc(userId)
+        .collection('notifications')
+        .add({
+        'title': '📦 Delivery Created',
+        'body': 'Your delivery is being processed and will arrive soon!',
+        'createdAt': FieldValue.serverTimestamp(),
+      });
+
       await docRef.set(deliveryWithId.toJson());
       emit(DeliverySuccess(await fetchDeliveriesByUser(userId)));
     } catch (e) {

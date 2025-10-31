@@ -4,6 +4,7 @@ import 'package:courier_delivery_app/features/authentication/cubit/login_cubit.d
 import 'package:courier_delivery_app/features/authentication/cubit/signup_cubit.dart';
 import 'package:courier_delivery_app/features/couriers/cubit/courier_cubit.dart';
 import 'package:courier_delivery_app/features/deliveries/cubit/delivery_cubit.dart';
+import 'package:courier_delivery_app/features/notifications/cubit/notification_cubit.dart';
 import 'package:courier_delivery_app/features/packages/cubit/package_cubit.dart';
 import 'package:courier_delivery_app/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -35,6 +36,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (context) => DeliveryCubit()),
         BlocProvider(create: (context) => PackageCubit()),
         BlocProvider(create: (context) => CourierCubit()),
+        BlocProvider(create: (context) => NotificationCubit()),
       ],
       child: ScreenUtilInit(
         designSize: const Size(375, 812),
