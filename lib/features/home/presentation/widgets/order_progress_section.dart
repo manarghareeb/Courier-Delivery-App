@@ -1,7 +1,7 @@
 import 'package:courier_delivery_app/core/routing/app_router.dart';
 import 'package:courier_delivery_app/core/theming/colors.dart';
 import 'package:courier_delivery_app/core/theming/styles.dart';
-import 'package:courier_delivery_app/features/deliveries/cubit/delivery_cubit.dart';
+import 'package:courier_delivery_app/features/packages/cubit/package_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -19,25 +19,25 @@ class _OrderProgressSectionState extends State<OrderProgressSection> {
   @override
   void initState() {
     super.initState();
-    context.read<DeliveryCubit>().loadDeliveries();
+    context.read<PackageCubit>().fetchPackages();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<DeliveryCubit, DeliveryState>(
+    return BlocConsumer<PackageCubit, PackageState>(
       listener: (context, state) async {
-        if (state is DeliveryError) {
+        if (state is PackageError) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(state.message), backgroundColor: Colors.red),
           );
         }
       },
       builder: (context, state) {
-        if (state is DeliveryLoading) {
+        if (state is PackageLoading) {
           return const Center(child: CircularProgressIndicator());
-        } else if (state is DeliverySuccess) {
+        } else if (state is PackageSuccess) {
           final inProgressDeliveries =
-              state.deliveries
+              state.packages
                   .where(
                     (delivery) =>
                         delivery.status.toLowerCase().trim() == 'in progress',
@@ -173,3 +173,4 @@ class _OrderProgressSectionState extends State<OrderProgressSection> {
     );
   }
 }
+

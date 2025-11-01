@@ -51,18 +51,6 @@ class DeliveryCubit extends Cubit<DeliveryState> {
     }
   }
 
-  Future<List<DeliveryModel>> fetchDeliveries(String userId) async {
-    final querySnapshot =
-        await firestore
-            .collection('users')
-            .doc(userId)
-            .collection('deliveries')
-            .get();
-    return querySnapshot.docs.map((doc) {
-      return DeliveryModel.fromJson(doc.data());
-    }).toList();
-  }
-
   Future<List<DeliveryModel>> fetchDeliveriesByUser(String userId) async {
     final querySnapshot =
         await firestore
@@ -76,21 +64,6 @@ class DeliveryCubit extends Cubit<DeliveryState> {
       data['id'] = doc.id;
       return DeliveryModel.fromJson(data);
     }).toList();
-  }
-
-  Future<void> loadDeliveries() async {
-    emit(DeliveryLoading());
-    try {
-      final user = auth.currentUser;
-      if (user == null) {
-        emit(DeliveryError('User not logged in.'));
-        return;
-      }
-      final deliveries = await fetchDeliveries(user.uid);
-      emit(DeliverySuccess(deliveries));
-    } catch (e) {
-      emit(DeliveryError('Failed to load deliveries: $e'));
-    }
   }
 
 }
