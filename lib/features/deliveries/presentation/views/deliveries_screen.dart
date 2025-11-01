@@ -2,11 +2,11 @@ import 'package:courier_delivery_app/core/routing/app_router.dart';
 import 'package:courier_delivery_app/core/theming/styles.dart';
 import 'package:courier_delivery_app/core/widgets/custom_button_widget.dart';
 import 'package:courier_delivery_app/core/widgets/alert_dialog_widget.dart';
-import 'package:courier_delivery_app/core/widgets/custom_text_field_widget.dart';
 import 'package:courier_delivery_app/features/deliveries/cubit/delivery_cubit.dart';
 import 'package:courier_delivery_app/features/deliveries/data/delivery_model.dart';
 import 'package:courier_delivery_app/features/deliveries/data/package_info.dart';
 import 'package:courier_delivery_app/features/deliveries/data/receiver_info.dart';
+import 'package:courier_delivery_app/features/deliveries/presentation/widgets/address_text_field.dart';
 import 'package:courier_delivery_app/features/deliveries/presentation/widgets/drop_down_button_widget.dart';
 import 'package:courier_delivery_app/features/deliveries/presentation/widgets/package_info_section.dart';
 import 'package:courier_delivery_app/features/deliveries/presentation/widgets/receiver_info_section.dart';
@@ -109,10 +109,9 @@ class _DeliveriesScreenState extends State<DeliveriesScreen> {
                         style: TextStyles.font14GreyNormalItalic,
                       ),
                       SizedBox(height: 10.h),
-                      CustomTextFieldWidget(
+                      AddressTextField(
                         controller: pickupLocationController,
                         hintText: 'Pickup Location',
-                        textInputType: TextInputType.streetAddress,
                         title: 'Pickup Location',
                         formKey: pickupLocationKey,
                         validator: (value) {
@@ -123,10 +122,9 @@ class _DeliveriesScreenState extends State<DeliveriesScreen> {
                         },
                       ),
                       SizedBox(height: 10.h),
-                      CustomTextFieldWidget(
+                      AddressTextField(
                         controller: dropOffLocationController,
                         hintText: 'Drop-off Location',
-                        textInputType: TextInputType.streetAddress,
                         title: 'Drop-off Location',
                         formKey: dropOffLocationKey,
                         validator: (value) {
@@ -275,3 +273,4 @@ class _DeliveriesScreenState extends State<DeliveriesScreen> {
     );
   }
 }
+

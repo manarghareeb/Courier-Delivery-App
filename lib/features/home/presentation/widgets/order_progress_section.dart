@@ -1,3 +1,4 @@
+import 'package:courier_delivery_app/core/routing/app_router.dart';
 import 'package:courier_delivery_app/core/theming/colors.dart';
 import 'package:courier_delivery_app/core/theming/styles.dart';
 import 'package:courier_delivery_app/features/deliveries/cubit/delivery_cubit.dart';
@@ -5,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 
 class OrderProgressSection extends StatefulWidget {
   const OrderProgressSection({super.key});
@@ -14,7 +16,6 @@ class OrderProgressSection extends StatefulWidget {
 }
 
 class _OrderProgressSectionState extends State<OrderProgressSection> {
-
   @override
   void initState() {
     super.initState();
@@ -34,11 +35,15 @@ class _OrderProgressSectionState extends State<OrderProgressSection> {
       builder: (context, state) {
         if (state is DeliveryLoading) {
           return const Center(child: CircularProgressIndicator());
-        } else if (state is DeliverySuccess) {  
-          final inProgressDeliveries = state.deliveries
-          .where((delivery) => delivery.status.toLowerCase().trim() == 'in progress')
-          .toList();
-          if (inProgressDeliveries.isEmpty){
+        } else if (state is DeliverySuccess) {
+          final inProgressDeliveries =
+              state.deliveries
+                  .where(
+                    (delivery) =>
+                        delivery.status.toLowerCase().trim() == 'in progress',
+                  )
+                  .toList();
+          if (inProgressDeliveries.isEmpty) {
             return const Center(child: Text('No Order Progress found.'));
           }
           return Container(
@@ -69,7 +74,9 @@ class _OrderProgressSectionState extends State<OrderProgressSection> {
                           ),
                           const Spacer(),
                           IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              GoRouter.of(context).push(AppRouter.mapScreen);
+                            },
                             icon: Icon(
                               Icons.arrow_forward,
                               color: Colors.grey,
@@ -160,7 +167,7 @@ class _OrderProgressSectionState extends State<OrderProgressSection> {
               },
             ),
           );
-        } 
+        }
         return const SizedBox();
       },
     );

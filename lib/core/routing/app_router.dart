@@ -9,6 +9,7 @@ import 'package:courier_delivery_app/features/home/presentation/views/home.dart'
 import 'package:courier_delivery_app/features/home/presentation/views/home_screen.dart';
 import 'package:courier_delivery_app/features/authentication/presentation/views/login_screen.dart';
 import 'package:courier_delivery_app/features/authentication/presentation/views/signup_screen.dart';
+import 'package:courier_delivery_app/features/home/presentation/views/map_screen.dart';
 import 'package:courier_delivery_app/features/notifications/cubit/notification_cubit.dart';
 import 'package:courier_delivery_app/features/notifications/presentation/views/notifications_screen.dart';
 import 'package:courier_delivery_app/features/account/presentation/views/account_screen.dart';
@@ -29,6 +30,7 @@ abstract class AppRouter {
   static final termsAndConditionsScreen = '/termsAndConditionsScreen';
   static final packagesScreen = '/packagesScreen';
   static final forgetPasswordScreen = '/forgetPasswordScreen';
+  static final mapScreen = '/mapScreen';
 
   static final route = GoRouter(
     routes: [
@@ -96,6 +98,7 @@ abstract class AppRouter {
         path: packagesScreen,
         builder: (context, state) => const PackagesScreen(),
       ),
+      GoRoute(path: mapScreen, builder: (context, state) => const MapScreen(),)
     ],
   );
 }
