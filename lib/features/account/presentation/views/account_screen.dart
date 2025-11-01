@@ -10,9 +10,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
-class AccountScreen extends StatelessWidget {
+class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
 
+  @override
+  State<AccountScreen> createState() => _AccountScreenState();
+}
+
+class _AccountScreenState extends State<AccountScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +26,7 @@ class AccountScreen extends StatelessWidget {
           padding: EdgeInsets.all(10.w),
           child: Column(
             children: [
-              Center(child: const CircleAvatarAndNameSection()),
+              Center(child: CircleAvatarAndNameSection()),
               SizedBox(height: 10.h),
               const Divider(),
               SizedBox(height: 10.h),

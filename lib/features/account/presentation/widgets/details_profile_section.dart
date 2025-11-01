@@ -6,7 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DetailsProfileSection extends StatefulWidget {
-  const DetailsProfileSection({super.key});
+  const DetailsProfileSection({super.key, this.onProfileUpdated});
+  final VoidCallback? onProfileUpdated;
 
   @override
   State<DetailsProfileSection> createState() => _DetailsProfileSectionState();
@@ -21,6 +22,15 @@ class _DetailsProfileSectionState extends State<DetailsProfileSection> {
   GlobalKey<FormState> nameKey = GlobalKey<FormState>();
   GlobalKey<FormState> emailKey = GlobalKey<FormState>();
   GlobalKey<FormState> phoneKey = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    emailController.dispose();
+    phoneController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,19 +51,23 @@ class _DetailsProfileSectionState extends State<DetailsProfileSection> {
           ],
         ),
         TextButton.icon(
-          onPressed: () {
-            showDialog(
+          onPressed: () async {
+            final result = await showDialog(
               context: context,
               builder:
-                (context) => OnPressedOnEditProfile(
-                  nameController: nameController, 
-                  nameKey: nameKey, 
-                  phoneController: phoneController, 
-                  phoneKey: phoneKey,
-                  passwordController: passwordController,
-                  passwordKey: passwordKey,
-                ),
+                  (context) => OnPressedOnEditProfile(
+                    nameController: nameController,
+                    nameKey: nameKey,
+                    phoneController: phoneController,
+                    phoneKey: phoneKey,
+                    passwordController: passwordController,
+                    passwordKey: passwordKey,
+                  ),
             );
+            if (result == true) {
+              setState(() {});
+              widget.onProfileUpdated?.call();
+            }
           },
           label: const Text('Edit Profile'),
           style: TextButton.styleFrom(
@@ -71,4 +85,3 @@ class _DetailsProfileSectionState extends State<DetailsProfileSection> {
     );
   }
 }
-

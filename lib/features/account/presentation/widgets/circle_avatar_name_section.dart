@@ -5,11 +5,16 @@ import 'package:courier_delivery_app/features/account/presentation/widgets/detai
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class CircleAvatarAndNameSection extends StatelessWidget {
+class CircleAvatarAndNameSection extends StatefulWidget {
   const CircleAvatarAndNameSection({
     super.key,
   });
 
+  @override
+  State<CircleAvatarAndNameSection> createState() => _CircleAvatarAndNameSectionState();
+}
+
+class _CircleAvatarAndNameSectionState extends State<CircleAvatarAndNameSection> {
   @override
   Widget build(BuildContext context) {
 
@@ -42,7 +47,13 @@ class CircleAvatarAndNameSection extends StatelessWidget {
           ),
         ),
         SizedBox(height: 20.h),
-        const DetailsProfileSection(),
+        DetailsProfileSection(
+          onProfileUpdated: (){
+            setState(() {
+              
+            });
+          },
+        ),
       ],
     );
   }

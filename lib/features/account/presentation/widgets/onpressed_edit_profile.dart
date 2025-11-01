@@ -21,9 +21,9 @@ class OnPressedOnEditProfile extends StatelessWidget {
   final GlobalKey<FormState> nameKey;
   final TextEditingController phoneController;
   final GlobalKey<FormState> phoneKey;
-
   final TextEditingController passwordController;
   final GlobalKey<FormState> passwordKey;
+
   Future<void> updateProfileWithPass(BuildContext context) async {
     if (!(nameKey.currentState?.validate() ?? true) ||
         !(phoneKey.currentState?.validate() ?? true) ||
@@ -80,7 +80,7 @@ class OnPressedOnEditProfile extends StatelessWidget {
           backgroundColor: Colors.green,
         ),
       );
-      Navigator.of(context).pop();
+      Navigator.of(context).pop(true);
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
