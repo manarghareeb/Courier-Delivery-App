@@ -27,38 +27,53 @@ class OnPressedOnEditProfile extends StatelessWidget {
   Future<void> updateProfileWithPass(BuildContext context) async {
     if (!(nameKey.currentState?.validate() ?? true) ||
         !(phoneKey.currentState?.validate() ?? true) ||
-        !(passwordKey.currentState?.validate() ?? true))
+        !(passwordKey.currentState?.validate() ?? true)) {
       return;
+    }
 
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) return;
 
-    final updatedName = nameController.text.trim();
-    final updatedPhone = phoneController.text.trim();
+    final userId = user.uid;
+    final docRef = FirebaseFirestore.instance.collection('users').doc(userId);
+
+    final updatedName =
+        nameController.text.trim().isEmpty
+            ? CacheHelper.getData('name') ?? ''
+            : nameController.text.trim();
+    final updatedPhone =
+        phoneController.text.trim().isEmpty
+            ? CacheHelper.getData('phone') ?? ''
+            : phoneController.text.trim();
     final updatedPassword = passwordController.text.trim();
 
-    try {
-      if (updatedPassword.isNotEmpty) {
+    final dataToUpdate = <String, dynamic>{
+      'name': updatedName,
+      'phone': updatedPhone,
+    };
+
+    if (updatedPassword.isNotEmpty) {
+      try {
         await user.updatePassword(updatedPassword);
+        dataToUpdate['password'] = updatedPassword;
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Failed to update password: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+        return;
       }
-      await user.reload();
+    }
 
-      final userId = user.uid;
-      final docRef = FirebaseFirestore.instance.collection('users').doc(userId);
-
-      final dataToUpdate = <String, dynamic>{};
-      if (updatedName.isNotEmpty) dataToUpdate['name'] = updatedName;
-      if (updatedPhone.isNotEmpty) dataToUpdate['phone'] = updatedPhone;
-      if (updatedPassword.isNotEmpty) dataToUpdate['password'] = updatedPassword;
-
-      if (dataToUpdate.isNotEmpty) {
-        await docRef.update(dataToUpdate);
-
-        dataToUpdate.forEach((key, value) {
-          CacheHelper.saveData(key: key, value: value);
-        });
+    try {
+      await docRef.update(dataToUpdate);
+      CacheHelper.saveData(key: 'name', value: updatedName);
+      CacheHelper.saveData(key: 'phone', value: updatedPhone);
+      if (updatedPassword.isNotEmpty) {
+        CacheHelper.saveData(key: 'password', value: updatedPassword);
       }
-
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Profile updated successfully'),
