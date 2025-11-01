@@ -1,5 +1,6 @@
 import 'package:courier_delivery_app/core/helpers/cache_helper.dart';
 import 'package:courier_delivery_app/core/routing/app_router.dart';
+import 'package:courier_delivery_app/features/account/cubit/technical_support_cubit/technical_support_cubit.dart';
 import 'package:courier_delivery_app/features/authentication/cubit/login_cubit.dart';
 import 'package:courier_delivery_app/features/authentication/cubit/signup_cubit.dart';
 import 'package:courier_delivery_app/features/couriers/cubit/courier_cubit.dart';
@@ -37,6 +38,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (context) => PackageCubit()),
         BlocProvider(create: (context) => CourierCubit()),
         BlocProvider(create: (context) => NotificationCubit()),
+        BlocProvider(create: (context) => TechnicalSupportCubit()),
       ],
       child: ScreenUtilInit(
         designSize: const Size(375, 812),
