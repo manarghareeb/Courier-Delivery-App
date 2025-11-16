@@ -7,7 +7,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 class NotificationsScreen extends StatelessWidget {
   const NotificationsScreen({super.key});
@@ -33,37 +32,37 @@ class NotificationsScreen extends StatelessWidget {
         }
       },
       builder: (context, state) {
+        if (state is NotificationLoding) {
+          return const Center(child: CircularProgressIndicator());
+        }
         final notifications = state is NotificationSuccess ? state.notifications : [];
-        return ModalProgressHUD(
-          inAsyncCall: state is NotificationLoding,
-          child: Scaffold(
-            appBar: AppBar(title: Text('Notifications'), centerTitle: true,),
-                body: notifications.isEmpty
-                ? const Center(child: Text('No notifications yet.'))
-                : ListView.builder(
-                itemCount: notifications.length,
-                itemBuilder: (context, index) {
-                  final notif = notifications[index];
-                  return Card(
-                    color: ColorManager.textFieldColor,
-                    margin: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
-                    child: ListTile(
-                      title: Text(
-                        notif.title, 
-                        style: TextStyles.font20BlackBoldItalic.copyWith(
-                          fontStyle: FontStyle.normal
-                        ),
-                      ),
-                      subtitle: Text(notif.body, style: TextStyles.font14GreyNormalItalic,),
-                      trailing: Text(
-                            notif.createdAt.toDate().toString().substring(0, 16),
-                            style: TextStyles.font12GreyNormalItalic,
-                          ),
+        return Scaffold(
+          appBar: AppBar(title: Text('Notifications'), centerTitle: true,),
+          body: notifications.isEmpty
+              ? const Center(child: Text('No notifications yet.'))
+              : ListView.builder(
+            itemCount: notifications.length,
+            itemBuilder: (context, index) {
+              final notif = notifications[index];
+              return Card(
+                color: ColorManager.textFieldColor,
+                margin: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
+                child: ListTile(
+                  title: Text(
+                    notif.title, 
+                    style: TextStyles.font20BlackBoldItalic.copyWith(
+                      fontStyle: FontStyle.normal
                     ),
-                  );
-                },
-              ),     
-              ),
+                  ),
+                  subtitle: Text(notif.body, style: TextStyles.font14GreyNormalItalic,),
+                  trailing: Text(
+                    notif.createdAt.toDate().toString().substring(0, 16),
+                    style: TextStyles.font12GreyNormalItalic,
+                  ),
+                ),
+              );
+            },
+          ),     
         );
       },
     ); 

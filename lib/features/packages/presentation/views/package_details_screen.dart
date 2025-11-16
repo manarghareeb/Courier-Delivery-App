@@ -103,7 +103,6 @@ class PackageDetailsScreen extends StatelessWidget {
     final receicerPhone = package.receiverInfo.phone;
     final receirverAddress = package.receiverInfo.address;
     final paymentMethod = package.paymentMethod;
-    //final date = '30 Oct 2025';
     final items = [
       {'title': 'Delivery Service', 'qty': 2, 'price': 50.0},
       {'title': 'Packaging', 'qty': 1, 'price': 20.0},

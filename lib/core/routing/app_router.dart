@@ -99,16 +99,3 @@ abstract class AppRouter {
     ],
   );
 }
-
-/*GoRoute(
-        path: courierDetailScreen,
-        builder: (context, state) {
-          final courier = state.extra as Map<String, dynamic>?;
-          if (courier == null) {
-            return Scaffold(
-              body: Center(child: Text('Courier data not found')),
-            );
-          }
-          return CourierDetailScreen(courier: courier);
-        },
-      ),*/

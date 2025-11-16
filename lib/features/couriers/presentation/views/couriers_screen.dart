@@ -135,11 +135,7 @@ class _CouriersScreenState extends State<CouriersScreen> {
                             ),
                             trailing: const Icon(Icons.arrow_forward_ios),
                             onTap: () {
-                              //final courier = featuredCouriers[index];
-                              /*GoRouter.of(context).push(
-                                AppRouter.courierDetailScreen,
-                                extra: package,
-                              );*/
+                              
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(builder: (_) => CourierDetailScreen(package: package)),

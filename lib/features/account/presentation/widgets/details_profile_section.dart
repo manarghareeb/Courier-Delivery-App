@@ -16,6 +16,8 @@ class _DetailsProfileSectionState extends State<DetailsProfileSection> {
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  GlobalKey<FormState> passwordKey = GlobalKey<FormState>();
   GlobalKey<FormState> nameKey = GlobalKey<FormState>();
   GlobalKey<FormState> emailKey = GlobalKey<FormState>();
   GlobalKey<FormState> phoneKey = GlobalKey<FormState>();
@@ -46,10 +48,10 @@ class _DetailsProfileSectionState extends State<DetailsProfileSection> {
                 (context) => OnPressedOnEditProfile(
                   nameController: nameController, 
                   nameKey: nameKey, 
-                  emailController: emailController, 
-                  emailKey: emailKey, 
                   phoneController: phoneController, 
-                  phoneKey: phoneKey
+                  phoneKey: phoneKey,
+                  passwordController: passwordController,
+                  passwordKey: passwordKey,
                 ),
             );
           },

@@ -93,24 +93,4 @@ class DeliveryCubit extends Cubit<DeliveryState> {
     }
   }
 
-  Future<void> deleteDelivery(String deliveryId) async {
-    emit(DeliveryLoading());
-    try {
-      final user = auth.currentUser;
-      if (user == null) {
-        emit(DeliveryError('User not logged in.'));
-        return;
-      }
-      await firestore
-          .collection('users')
-          .doc(user.uid)
-          .collection('deliveries')
-          .doc(deliveryId)
-          .delete();
-      final updatedDeliveries = await fetchDeliveriesByUser(user.uid);
-      emit(DeliverySuccess(updatedDeliveries));
-    } catch (e) {
-      emit(DeliveryError('Failed to delete delivery: $e'));
-    }
-  }
 }
