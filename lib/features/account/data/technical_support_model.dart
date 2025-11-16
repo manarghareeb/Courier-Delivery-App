@@ -6,9 +6,15 @@ class TechnicalSupportModel {
   final Timestamp? createdAt;
   final String userId;
 
-  TechnicalSupportModel({required this.id, required this.userId, required this.message, this.createdAt,});
+  TechnicalSupportModel({
+    required this.id,
+    required this.userId,
+    required this.message,
+    this.createdAt,
+  });
 
-  factory TechnicalSupportModel.fromMap(Map<String, dynamic> map, String docId) {
+  factory TechnicalSupportModel.fromMap(
+      Map<String, dynamic> map, String docId) {
     return TechnicalSupportModel(
       id: docId,
       message: map['message'] ?? '',

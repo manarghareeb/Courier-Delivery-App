@@ -13,11 +13,9 @@ class AlreadyHaveAccount extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          'Already have a account?', 
+          'Already have a account?',
           style: TextStyles.font14WhiteNormal.copyWith(
-            color: ColorManager.geyColor,
-            fontWeight: FontWeight.w600
-          ),
+              color: ColorManager.geyColor, fontWeight: FontWeight.w600),
         ),
         TextButton(
           onPressed: () {
@@ -26,9 +24,7 @@ class AlreadyHaveAccount extends StatelessWidget {
           child: Text(
             'Login',
             style: TextStyles.font14WhiteNormal.copyWith(
-              color: ColorManager.mainColor,
-              fontWeight: FontWeight.w600
-            ),
+                color: ColorManager.mainColor, fontWeight: FontWeight.w600),
           ),
         ),
       ],

@@ -35,104 +35,113 @@ class _CourierDetailScreenState extends State<CourierDetailScreen> {
         return ModalProgressHUD(
           inAsyncCall: state is DeliveryLoading,
           child: Scaffold(
-                appBar: AppBar(title: Text('Delivery ID: ${widget.package.id}')),
-                body: Padding(
-          padding: EdgeInsets.all(16.w),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Package Info',
-                style: TextStyles.font16WhiteW600.copyWith(color: Colors.black),
-              ),
-              SizedBox(height: 8.h),
-              Text(
-                '- Weight: ${widget.package.packageInfo.weight}',
-                style: TextStyles.font14GreyNormalItalic,
-              ),
-              Text(
-                '- Size: ${widget.package.packageInfo.size}',
-                style: TextStyles.font14GreyNormalItalic,
-              ),
-              Text(
-                '- Contents: ${widget.package.packageInfo.contents}',
-                style: TextStyles.font14GreyNormalItalic,
-              ),
-              SizedBox(height: 16.h),
-              Text(
-                'From / To Locations',
-                style: TextStyles.font16WhiteW600.copyWith(color: Colors.black),
-              ),
-              SizedBox(height: 8.h),
-              Text(
-                'From: ${widget.package.pickupLocation}',
-                style: TextStyles.font14GreyNormalItalic,
-              ),
-              Text(
-                'To: ${widget.package.dropOffLocation}',
-                style: TextStyles.font14GreyNormalItalic,
-              ),
-              SizedBox(height: 16.h),
-              Text(
-                'Estimated Time & Price',
-                style: TextStyles.font16WhiteW600.copyWith(color: Colors.black),
-              ),
-              SizedBox(height: 8.h),
-              Text(
-                'Time: $estimatedTime mins\nPrice: $price EGP',
-                style: TextStyles.font14GreyNormalItalic,
-              ),
-              SizedBox(height: 20.h,),
-              Text(
-                'Rate this courier:',
-                style: TextStyles.font16WhiteW600.copyWith(color: Colors.black),
-              ),
-              SizedBox(height: 10.h),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: List.generate(5, (index) {
-                  return IconButton(
-                    padding: EdgeInsets.zero,
-                    constraints: const BoxConstraints(),
-                    icon: Icon(
-                      index < userRating ? Icons.star : Icons.star_border,
-                      color: Colors.amber,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        userRating = index + 1.0;
-                      });
-                    },
-                  );
-                }),
-              ),
-              SizedBox(height: 16.h),
-              Center(
-                child: SmallTextButtomWidget(
-                  title: 'Submit Rating', 
-                  onPressed: () {
-                    if (userRating == 0) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Please select a rating before submitting')),
+            appBar: AppBar(title: Text('Delivery ID: ${widget.package.id}')),
+            body: Padding(
+              padding: EdgeInsets.all(16.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Package Info',
+                    style: TextStyles.font16WhiteW600
+                        .copyWith(color: Colors.black),
+                  ),
+                  SizedBox(height: 8.h),
+                  Text(
+                    '- Weight: ${widget.package.packageInfo.weight}',
+                    style: TextStyles.font14GreyNormalItalic,
+                  ),
+                  Text(
+                    '- Size: ${widget.package.packageInfo.size}',
+                    style: TextStyles.font14GreyNormalItalic,
+                  ),
+                  Text(
+                    '- Contents: ${widget.package.packageInfo.contents}',
+                    style: TextStyles.font14GreyNormalItalic,
+                  ),
+                  SizedBox(height: 16.h),
+                  Text(
+                    'From / To Locations',
+                    style: TextStyles.font16WhiteW600
+                        .copyWith(color: Colors.black),
+                  ),
+                  SizedBox(height: 8.h),
+                  Text(
+                    'From: ${widget.package.pickupLocation}',
+                    style: TextStyles.font14GreyNormalItalic,
+                  ),
+                  Text(
+                    'To: ${widget.package.dropOffLocation}',
+                    style: TextStyles.font14GreyNormalItalic,
+                  ),
+                  SizedBox(height: 16.h),
+                  Text(
+                    'Estimated Time & Price',
+                    style: TextStyles.font16WhiteW600
+                        .copyWith(color: Colors.black),
+                  ),
+                  SizedBox(height: 8.h),
+                  Text(
+                    'Time: $estimatedTime mins\nPrice: $price EGP',
+                    style: TextStyles.font14GreyNormalItalic,
+                  ),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  Text(
+                    'Rate this courier:',
+                    style: TextStyles.font16WhiteW600
+                        .copyWith(color: Colors.black),
+                  ),
+                  SizedBox(height: 10.h),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: List.generate(5, (index) {
+                      return IconButton(
+                        padding: EdgeInsets.zero,
+                        constraints: const BoxConstraints(),
+                        icon: Icon(
+                          index < userRating ? Icons.star : Icons.star_border,
+                          color: Colors.amber,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            userRating = index + 1.0;
+                          });
+                        },
                       );
-                      return;
-                    }
-                    final courierCubit = context.read<CourierCubit>();
-                    courierCubit.addCourier(
-                      deliveryId: widget.package.id,
-                      rating: userRating,
-                      estimatedTime: estimatedTime,
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Rating saved successfully!')),
-                    );
-                  },
-                ),
+                    }),
+                  ),
+                  SizedBox(height: 16.h),
+                  Center(
+                    child: SmallTextButtomWidget(
+                      title: 'Submit Rating',
+                      onPressed: () {
+                        if (userRating == 0) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text(
+                                    'Please select a rating before submitting')),
+                          );
+                          return;
+                        }
+                        final courierCubit = context.read<CourierCubit>();
+                        courierCubit.addCourier(
+                          deliveryId: widget.package.id,
+                          rating: userRating,
+                          estimatedTime: estimatedTime,
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                              content: Text('Rating saved successfully!')),
+                        );
+                      },
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-                ),
-              ),
         );
       },
     );

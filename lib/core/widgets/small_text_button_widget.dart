@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SmallTextButtomWidget extends StatelessWidget {
-  const SmallTextButtomWidget({super.key, required this.title, required this.onPressed});
+  const SmallTextButtomWidget(
+      {super.key, required this.title, required this.onPressed});
   final String title;
   final VoidCallback onPressed;
 

@@ -14,7 +14,6 @@ class MapScreen extends StatefulWidget {
 }
 
 class _MapScreenState extends State<MapScreen> {
-
   LatLng? pickupLocation;
   LatLng? dropOffLocation;
 
@@ -71,51 +70,55 @@ class _MapScreenState extends State<MapScreen> {
           );
         } else {
           return Scaffold(
-          appBar: AppBar(title: const Text('Delivery Map'), centerTitle: true,),
-          body: FlutterMap(
-            options: MapOptions(
-              initialCenter: pickupLocation!,
-              initialZoom: 12.0,
+            appBar: AppBar(
+              title: const Text('Delivery Map'),
+              centerTitle: true,
             ),
-            children: [
-              TileLayer(
-                urlTemplate:
-                    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-                subdomains: const ['a', 'b', 'c'],
-                userAgentPackageName: 'com.example.courier_delivery_app',
+            body: FlutterMap(
+              options: MapOptions(
+                initialCenter: pickupLocation!,
+                initialZoom: 12.0,
               ),
-              MarkerLayer(
-                markers: [
-                  Marker(
-                    point: pickupLocation!,
-                    width: 60,
-                    height: 60,
-                    child: const Icon(
-                      Icons.location_on,
-                      color: Colors.green,
-                      size: 40,
+              children: [
+                TileLayer(
+                  urlTemplate:
+                      'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                  subdomains: const ['a', 'b', 'c'],
+                  userAgentPackageName: 'com.example.courier_delivery_app',
+                ),
+                MarkerLayer(
+                  markers: [
+                    Marker(
+                      point: pickupLocation!,
+                      width: 60,
+                      height: 60,
+                      child: const Icon(
+                        Icons.location_on,
+                        color: Colors.green,
+                        size: 40,
+                      ),
                     ),
-                  ),
-                  Marker(
-                    point: dropOffLocation!,
-                    width: 60,
-                    height: 60,
-                    child: const Icon(Icons.flag, color: Colors.red, size: 40),
-                  ),
-                ],
-              ),
-              PolylineLayer(
-                polylines: [
-                  Polyline(
-                    points: [pickupLocation!, dropOffLocation!],
-                    color: Colors.blue,
-                    strokeWidth: 4.0,
-                  ),
-                ],
-              ),
-            ],
-          ),
-        );
+                    Marker(
+                      point: dropOffLocation!,
+                      width: 60,
+                      height: 60,
+                      child:
+                          const Icon(Icons.flag, color: Colors.red, size: 40),
+                    ),
+                  ],
+                ),
+                PolylineLayer(
+                  polylines: [
+                    Polyline(
+                      points: [pickupLocation!, dropOffLocation!],
+                      color: Colors.blue,
+                      strokeWidth: 4.0,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          );
         }
       },
     );

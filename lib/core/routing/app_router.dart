@@ -37,19 +37,17 @@ abstract class AppRouter {
       GoRoute(path: '/', builder: (context, state) => const OnboardingScreen()),
       GoRoute(
         path: loginScreen,
-        builder:
-            (context, state) => BlocProvider.value(
-              value: BlocProvider.of<LoginCubit>(context),
-              child: const LoginScreen(),
-            ),
+        builder: (context, state) => BlocProvider.value(
+          value: BlocProvider.of<LoginCubit>(context),
+          child: const LoginScreen(),
+        ),
       ),
       GoRoute(
         path: signUpScreen,
-        builder:
-            (context, state) => BlocProvider.value(
-              value: BlocProvider.of<SignupCubit>(context),
-              child: const SignUpScreen(),
-            ),
+        builder: (context, state) => BlocProvider.value(
+          value: BlocProvider.of<SignupCubit>(context),
+          child: const SignUpScreen(),
+        ),
       ),
       GoRoute(
         path: forgetPasswordScreen,
@@ -98,7 +96,10 @@ abstract class AppRouter {
         path: packagesScreen,
         builder: (context, state) => const PackagesScreen(),
       ),
-      GoRoute(path: mapScreen, builder: (context, state) => const MapScreen(),)
+      GoRoute(
+        path: mapScreen,
+        builder: (context, state) => const MapScreen(),
+      )
     ],
   );
 }

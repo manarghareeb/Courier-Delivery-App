@@ -22,13 +22,12 @@ class TechnicalSupportScreen extends StatelessWidget {
         if (state is TechnicalSupportError) {
           showDialog(
             context: context,
-            builder:
-                (context) => AlertDialogWidget(
-                  title: state.message,
-                  onPressedYes: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
+            builder: (context) => AlertDialogWidget(
+              title: state.message,
+              onPressedYes: () {
+                Navigator.of(context).pop();
+              },
+            ),
           );
         }
         if (state is TechnicalSupportSuccess) {
@@ -86,8 +85,8 @@ class TechnicalSupportScreen extends StatelessWidget {
                       message: messageText,
                     );
                     context.read<TechnicalSupportCubit>().addSupportMessage(
-                      supportMessage,
-                    );
+                          supportMessage,
+                        );
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
                         content: Text('Message sent!'),

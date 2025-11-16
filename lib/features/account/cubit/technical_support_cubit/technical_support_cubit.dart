@@ -21,13 +21,14 @@ class TechnicalSupportCubit extends Cubit<TechnicalSupportState> {
           .add(supportMessage.toMap());
 
       await firestore
-        .collection('users')
-        .doc(userId)
-        .collection('notifications')
-        .add({
-          'title': 'Support Message Received',
-          'body': 'Your message has been received. We will respond as soon as possible.',
-          'createdAt': FieldValue.serverTimestamp(),
+          .collection('users')
+          .doc(userId)
+          .collection('notifications')
+          .add({
+        'title': 'Support Message Received',
+        'body':
+            'Your message has been received. We will respond as soon as possible.',
+        'createdAt': FieldValue.serverTimestamp(),
       });
       emit(TechnicalSupportSuccess(technicalSupportModel: supportMessage));
     } catch (e) {

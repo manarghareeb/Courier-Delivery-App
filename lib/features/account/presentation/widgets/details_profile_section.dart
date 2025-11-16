@@ -54,15 +54,14 @@ class _DetailsProfileSectionState extends State<DetailsProfileSection> {
           onPressed: () async {
             final result = await showDialog(
               context: context,
-              builder:
-                  (context) => OnPressedOnEditProfile(
-                    nameController: nameController,
-                    nameKey: nameKey,
-                    phoneController: phoneController,
-                    phoneKey: phoneKey,
-                    passwordController: passwordController,
-                    passwordKey: passwordKey,
-                  ),
+              builder: (context) => OnPressedOnEditProfile(
+                nameController: nameController,
+                nameKey: nameKey,
+                phoneController: phoneController,
+                phoneKey: phoneKey,
+                passwordController: passwordController,
+                passwordKey: passwordKey,
+              ),
             );
             if (result == true) {
               setState(() {});

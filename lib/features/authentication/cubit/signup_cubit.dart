@@ -15,13 +15,14 @@ class SignupCubit extends Cubit<AuthState> {
   final TextEditingController phone = TextEditingController();
 
   final CollectionReference users =
-    FirebaseFirestore.instance.collection("users");
+      FirebaseFirestore.instance.collection("users");
 
   Future<void> signupAccount() async {
     try {
       emit(SignUpLoading());
 
-      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      UserCredential userCredential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email.text,
         password: password.text,
       );

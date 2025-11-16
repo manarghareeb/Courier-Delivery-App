@@ -30,30 +30,26 @@ class TextStyles {
   );
 
   static TextStyle font12GreyNormalItalic = TextStyle(
-    fontSize: 12.sp,
-    fontWeight: FontWeight.w500,
-    color: ColorManager.geyColor,
-    fontStyle: FontStyle.italic
-  );
+      fontSize: 12.sp,
+      fontWeight: FontWeight.w500,
+      color: ColorManager.geyColor,
+      fontStyle: FontStyle.italic);
 
   static TextStyle font14GreyNormalItalic = TextStyle(
-    fontSize: 14.sp,
-    fontWeight: FontWeight.w500,
-    color: ColorManager.geyColor,
-    fontStyle: FontStyle.italic
-  );
+      fontSize: 14.sp,
+      fontWeight: FontWeight.w500,
+      color: ColorManager.geyColor,
+      fontStyle: FontStyle.italic);
 
   static TextStyle font12BlackBoldNormal = TextStyle(
-    fontSize: 12.sp,
-    fontWeight: FontWeight.bold,
-    color: Colors.black,
-    fontStyle: FontStyle.normal
-  );  
+      fontSize: 12.sp,
+      fontWeight: FontWeight.bold,
+      color: Colors.black,
+      fontStyle: FontStyle.normal);
 
   static TextStyle font10BlackW700Italic = TextStyle(
-    fontSize: 10.sp,
-    fontWeight: FontWeight.w700,
-    color: ColorManager.geyColor,
-    fontStyle: FontStyle.italic
-  );
+      fontSize: 10.sp,
+      fontWeight: FontWeight.w700,
+      color: ColorManager.geyColor,
+      fontStyle: FontStyle.italic);
 }

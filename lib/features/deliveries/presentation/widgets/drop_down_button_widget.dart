@@ -38,13 +38,12 @@ class DropDownButtonWidget extends StatelessWidget {
         ),
       ),
       value: null,
-      items:
-          types.map((method) {
-            return DropdownMenuItem<String>(
-              value: method.toLowerCase(),
-              child: Text(method),
-            );
-          }).toList(),
+      items: types.map((method) {
+        return DropdownMenuItem<String>(
+          value: method.toLowerCase(),
+          child: Text(method),
+        );
+      }).toList(),
       onChanged: onChange,
     );
   }

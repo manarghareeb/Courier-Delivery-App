@@ -36,13 +36,12 @@ class _OrderProgressSectionState extends State<OrderProgressSection> {
         if (state is PackageLoading) {
           return const Center(child: CircularProgressIndicator());
         } else if (state is PackageSuccess) {
-          final inProgressDeliveries =
-              state.packages
-                  .where(
-                    (delivery) =>
-                        delivery.status.toLowerCase().trim() == 'in progress',
-                  )
-                  .toList();
+          final inProgressDeliveries = state.packages
+              .where(
+                (delivery) =>
+                    delivery.status.toLowerCase().trim() == 'in progress',
+              )
+              .toList();
           if (inProgressDeliveries.isEmpty) {
             return const Center(child: Text('No Order Progress found.'));
           }
@@ -173,4 +172,3 @@ class _OrderProgressSectionState extends State<OrderProgressSection> {
     );
   }
 }
-

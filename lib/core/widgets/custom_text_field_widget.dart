@@ -57,21 +57,18 @@ class _CustomTextFieldWidgetState extends State<CustomTextFieldWidget> {
             borderRadius: BorderRadius.circular(8.0),
             borderSide: BorderSide.none,
           ),
-          suffixIcon:
-              widget.obscureText == true
-                  ? IconButton(
-                    icon: Icon(
-                      isObscured ? Icons.visibility_off : Icons.visibility,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        isObscured = !isObscured;
-                      });
-                    },
-                  )
-                  : (widget.suffixIcon != null
-                      ? Icon(widget.suffixIcon)
-                      : null),
+          suffixIcon: widget.obscureText == true
+              ? IconButton(
+                  icon: Icon(
+                    isObscured ? Icons.visibility_off : Icons.visibility,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      isObscured = !isObscured;
+                    });
+                  },
+                )
+              : (widget.suffixIcon != null ? Icon(widget.suffixIcon) : null),
         ),
       ),
     );

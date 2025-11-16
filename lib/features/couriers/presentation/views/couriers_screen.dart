@@ -135,10 +135,11 @@ class _CouriersScreenState extends State<CouriersScreen> {
                             ),
                             trailing: const Icon(Icons.arrow_forward_ios),
                             onTap: () {
-                              
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (_) => CourierDetailScreen(package: package)),
+                                MaterialPageRoute(
+                                    builder: (_) =>
+                                        CourierDetailScreen(package: package)),
                               );
                             },
                           ),

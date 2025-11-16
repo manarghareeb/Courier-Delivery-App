@@ -35,10 +35,10 @@ class DeliveryCubit extends Cubit<DeliveryState> {
       final deliveryWithId = delivery.copyWith(id: docRef.id);
 
       await firestore
-        .collection('users')
-        .doc(userId)
-        .collection('notifications')
-        .add({
+          .collection('users')
+          .doc(userId)
+          .collection('notifications')
+          .add({
         'title': '📦 Delivery Created',
         'body': 'Your delivery is being processed and will arrive soon!',
         'createdAt': FieldValue.serverTimestamp(),
@@ -52,12 +52,11 @@ class DeliveryCubit extends Cubit<DeliveryState> {
   }
 
   Future<List<DeliveryModel>> fetchDeliveriesByUser(String userId) async {
-    final querySnapshot =
-        await firestore
-            .collection('users')
-            .doc(userId)
-            .collection('deliveries')
-            .get();
+    final querySnapshot = await firestore
+        .collection('users')
+        .doc(userId)
+        .collection('deliveries')
+        .get();
 
     return querySnapshot.docs.map((doc) {
       final data = doc.data();
@@ -65,5 +64,4 @@ class DeliveryCubit extends Cubit<DeliveryState> {
       return DeliveryModel.fromJson(data);
     }).toList();
   }
-
 }

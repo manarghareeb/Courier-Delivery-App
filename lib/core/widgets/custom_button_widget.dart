@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomButtonWidget extends StatelessWidget {
-  const CustomButtonWidget({super.key, required this.buttonText, required this.onPressed});
+  const CustomButtonWidget(
+      {super.key, required this.buttonText, required this.onPressed});
   final String buttonText;
   final VoidCallback onPressed;
 

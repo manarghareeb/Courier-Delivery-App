@@ -18,12 +18,11 @@ class CourierCubit extends Cubit<CourierState> {
     emit(CourierLoading());
     try {
       final userId = auth.currentUser!.uid;
-      final docRef =
-          firestore
-              .collection('users')
-              .doc(userId)
-              .collection('couriers')
-              .doc();
+      final docRef = firestore
+          .collection('users')
+          .doc(userId)
+          .collection('couriers')
+          .doc();
 
       await docRef.set({
         'deliveryId': deliveryId,
@@ -41,17 +40,15 @@ class CourierCubit extends Cubit<CourierState> {
     emit(CourierLoading());
     try {
       final userId = auth.currentUser!.uid;
-      final snapshot =
-          await firestore
-              .collection('users')
-              .doc(userId)
-              .collection('couriers')
-              .get();
+      final snapshot = await firestore
+          .collection('users')
+          .doc(userId)
+          .collection('couriers')
+          .get();
 
-      final couriers =
-          snapshot.docs
-              .map((doc) => CourierModel.fromMap(doc.data(), doc.id))
-              .toList();
+      final couriers = snapshot.docs
+          .map((doc) => CourierModel.fromMap(doc.data(), doc.id))
+          .toList();
 
       emit(CourierSuccess(couriers));
     } catch (e) {

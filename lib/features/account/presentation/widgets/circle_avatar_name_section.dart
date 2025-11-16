@@ -11,13 +11,14 @@ class CircleAvatarAndNameSection extends StatefulWidget {
   });
 
   @override
-  State<CircleAvatarAndNameSection> createState() => _CircleAvatarAndNameSectionState();
+  State<CircleAvatarAndNameSection> createState() =>
+      _CircleAvatarAndNameSectionState();
 }
 
-class _CircleAvatarAndNameSectionState extends State<CircleAvatarAndNameSection> {
+class _CircleAvatarAndNameSectionState
+    extends State<CircleAvatarAndNameSection> {
   @override
   Widget build(BuildContext context) {
-
     String getInitials(String name) {
       final parts = name.trim().split(' ');
       if (parts.length > 1) {
@@ -48,14 +49,11 @@ class _CircleAvatarAndNameSectionState extends State<CircleAvatarAndNameSection>
         ),
         SizedBox(height: 20.h),
         DetailsProfileSection(
-          onProfileUpdated: (){
-            setState(() {
-              
-            });
+          onProfileUpdated: () {
+            setState(() {});
           },
         ),
       ],
     );
   }
 }
-

@@ -17,7 +17,6 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeView> {
-
   late int index;
   List<Widget> screens = [
     const HomeScreen(),
@@ -30,9 +29,9 @@ class _HomeScreenState extends State<HomeView> {
   @override
   void initState() {
     super.initState();
-    index = widget.initialIndex; 
+    index = widget.initialIndex;
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

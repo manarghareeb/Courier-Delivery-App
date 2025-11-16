@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class AlertDialogWidget extends StatelessWidget {
   const AlertDialogWidget({
     super.key,
-    required this.title, 
+    required this.title,
     required this.onPressedYes,
   });
 
@@ -28,4 +28,3 @@ class AlertDialogWidget extends StatelessWidget {
     );
   }
 }
-
