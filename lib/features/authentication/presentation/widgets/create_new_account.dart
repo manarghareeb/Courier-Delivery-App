@@ -1,4 +1,3 @@
-
 import 'package:courier_delivery_app/core/routing/app_router.dart';
 import 'package:courier_delivery_app/core/theming/colors.dart';
 import 'package:courier_delivery_app/core/theming/styles.dart';
@@ -16,11 +15,9 @@ class CreateNewAccount extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          'Need a account?', 
+          'Need a account?',
           style: TextStyles.font14WhiteNormal.copyWith(
-            color: ColorManager.geyColor,
-            fontWeight: FontWeight.w600
-          ),
+              color: ColorManager.geyColor, fontWeight: FontWeight.w600),
         ),
         TextButton(
           onPressed: () {
@@ -29,13 +26,10 @@ class CreateNewAccount extends StatelessWidget {
           child: Text(
             'Sign Up',
             style: TextStyles.font14WhiteNormal.copyWith(
-              color: ColorManager.mainColor,
-              fontWeight: FontWeight.w600
-            ),
+                color: ColorManager.mainColor, fontWeight: FontWeight.w600),
           ),
         ),
       ],
     );
   }
 }
-

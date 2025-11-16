@@ -19,16 +19,15 @@ class YesAndCancelInAlertDialog extends StatelessWidget {
         SmallTextButtomWidget(title: 'Yes', onPressed: onPressedYes),
         TextButton(
           style: TextButton.styleFrom(
-            foregroundColor: Colors.white,
-            backgroundColor: Colors.white,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
-              side: BorderSide(
-                color: ColorManager.mainColor,
+              foregroundColor: Colors.white,
+              backgroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+                side: BorderSide(
+                  color: ColorManager.mainColor,
+                ),
               ),
-            ),
-            minimumSize: const Size(100, 40)
-          ),
+              minimumSize: const Size(100, 40)),
           onPressed: () {
             Navigator.of(context).pop();
           },

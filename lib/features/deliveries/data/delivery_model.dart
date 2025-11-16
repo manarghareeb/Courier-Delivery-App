@@ -1,4 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';import 'package:courier_delivery_app/features/deliveries/data/package_info.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:courier_delivery_app/features/deliveries/data/package_info.dart';
 import 'package:courier_delivery_app/features/deliveries/data/receiver_info.dart';
 
 class DeliveryModel {
@@ -106,14 +107,15 @@ class DeliveryModel {
       paymentMethod: map['paymentMethod'] ?? '',
       status: map['status'] ?? 'pending',
       userId: map['userId'] ?? '',
-      createdAt: map['createdAt'] is Timestamp ? map['createdAt'] as Timestamp : null,
+      createdAt:
+          map['createdAt'] is Timestamp ? map['createdAt'] as Timestamp : null,
       packageInfo: map['packageInfo'] != null
           ? PackageInfo.fromJson(Map<String, dynamic>.from(map['packageInfo']))
           : PackageInfo(weight: '', size: '', contents: ''),
       receiverInfo: map['receiverInfo'] != null
-          ? ReceiverInfo.fromJson(Map<String, dynamic>.from(map['receiverInfo']))
+          ? ReceiverInfo.fromJson(
+              Map<String, dynamic>.from(map['receiverInfo']))
           : ReceiverInfo(name: '', phone: '', address: '', location: ''),
     );
   }
 }
-

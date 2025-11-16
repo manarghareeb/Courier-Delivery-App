@@ -16,7 +16,7 @@ class CourierModel {
   factory CourierModel.fromMap(Map<String, dynamic> map, String docId) {
     return CourierModel(
       id: docId,
-      deliveryId: map['deliveryId'] ,
+      deliveryId: map['deliveryId'],
       rating: (map['rating']).toDouble(),
       estimatedTime: (map['estimatedTime']).toDouble(),
     );

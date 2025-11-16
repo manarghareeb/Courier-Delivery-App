@@ -10,11 +10,19 @@ class Logo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Image.asset('assets/Blob.png', width: 283.w, height: 295.h,),
+        Image.asset(
+          'assets/Blob.png',
+          width: 283.w,
+          height: 295.h,
+        ),
         Positioned(
           top: 80.h,
           left: 40.w,
-          child: Image.asset('assets/logo.png', width: 210.w, height: 120.h,),
+          child: Image.asset(
+            'assets/logo.png',
+            width: 210.w,
+            height: 120.h,
+          ),
         ),
       ],
     );

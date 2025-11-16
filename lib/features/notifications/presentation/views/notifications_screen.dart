@@ -21,13 +21,12 @@ class NotificationsScreen extends StatelessWidget {
         if (state is NotificationError) {
           showDialog(
             context: context,
-            builder:
-                (context) => AlertDialogWidget(
-                  title: state.message,
-                  onPressedYes: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
+            builder: (context) => AlertDialogWidget(
+              title: state.message,
+              onPressedYes: () {
+                Navigator.of(context).pop();
+              },
+            ),
           );
         }
       },
@@ -35,36 +34,43 @@ class NotificationsScreen extends StatelessWidget {
         if (state is NotificationLoding) {
           return const Center(child: CircularProgressIndicator());
         }
-        final notifications = state is NotificationSuccess ? state.notifications : [];
+        final notifications =
+            state is NotificationSuccess ? state.notifications : [];
         return Scaffold(
-          appBar: AppBar(title: Text('Notifications'), centerTitle: true,),
+          appBar: AppBar(
+            title: Text('Notifications'),
+            centerTitle: true,
+          ),
           body: notifications.isEmpty
               ? const Center(child: Text('No notifications yet.'))
               : ListView.builder(
-            itemCount: notifications.length,
-            itemBuilder: (context, index) {
-              final notif = notifications[index];
-              return Card(
-                color: ColorManager.textFieldColor,
-                margin: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
-                child: ListTile(
-                  title: Text(
-                    notif.title, 
-                    style: TextStyles.font20BlackBoldItalic.copyWith(
-                      fontStyle: FontStyle.normal
-                    ),
-                  ),
-                  subtitle: Text(notif.body, style: TextStyles.font14GreyNormalItalic,),
-                  trailing: Text(
-                    notif.createdAt.toDate().toString().substring(0, 16),
-                    style: TextStyles.font12GreyNormalItalic,
-                  ),
+                  itemCount: notifications.length,
+                  itemBuilder: (context, index) {
+                    final notif = notifications[index];
+                    return Card(
+                      color: ColorManager.textFieldColor,
+                      margin:
+                          EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
+                      child: ListTile(
+                        title: Text(
+                          notif.title,
+                          style: TextStyles.font20BlackBoldItalic
+                              .copyWith(fontStyle: FontStyle.normal),
+                        ),
+                        subtitle: Text(
+                          notif.body,
+                          style: TextStyles.font14GreyNormalItalic,
+                        ),
+                        trailing: Text(
+                          notif.createdAt.toDate().toString().substring(0, 16),
+                          style: TextStyles.font12GreyNormalItalic,
+                        ),
+                      ),
+                    );
+                  },
                 ),
-              );
-            },
-          ),     
         );
       },
-    ); 
+    );
   }
 }

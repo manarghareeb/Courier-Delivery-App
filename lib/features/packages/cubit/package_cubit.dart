@@ -20,18 +20,16 @@ class PackageCubit extends Cubit<PackageState> {
         return;
       }
 
-      final querySnapshot =
-          await firestore
-              .collection('users')
-              .doc(userId)
-              .collection('deliveries')
-              .get();
+      final querySnapshot = await firestore
+          .collection('users')
+          .doc(userId)
+          .collection('deliveries')
+          .get();
 
-      final packages =
-          querySnapshot.docs.map((doc) {
-            final data = doc.data();
-            return DeliveryModel.fromMap(data, doc.id);
-          }).toList();
+      final packages = querySnapshot.docs.map((doc) {
+        final data = doc.data();
+        return DeliveryModel.fromMap(data, doc.id);
+      }).toList();
 
       emit(PackageSuccess(packages));
     } catch (e) {

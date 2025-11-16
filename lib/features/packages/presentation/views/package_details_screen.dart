@@ -29,12 +29,13 @@ class PackageDetailsScreen extends StatelessWidget {
               'Package Info',
               style: TextStyles.font16WhiteW600.copyWith(color: Colors.black),
             ),
-            Text('Size: ${package.packageInfo.size}', style: TextStyles.font14GreyNormalItalic),
+            Text('Size: ${package.packageInfo.size}',
+                style: TextStyles.font14GreyNormalItalic),
             Text(
               'Weight: ${package.packageInfo.weight}',
               style: TextStyles.font14GreyNormalItalic,
             ),
-             Text(
+            Text(
               'Contents: ${package.packageInfo.contents}',
               style: TextStyles.font14GreyNormalItalic,
             ),

@@ -26,10 +26,9 @@ class AddressTextField extends StatefulWidget {
 }
 
 class _AddressTextFieldState extends State<AddressTextField> {
-
   List<NominatimResponse> addresses = [];
   bool isLoading = false;
-  
+
   Future<void> searchAddress(String query) async {
     if (query.isEmpty) {
       setState(() => addresses = []);

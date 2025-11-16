@@ -34,7 +34,9 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Center(child: Text('Packers & Movers', style: TextStyles.font32MainColorBold)),
+              Center(
+                  child: Text('Packers & Movers',
+                      style: TextStyles.font32MainColorBold)),
               SizedBox(height: 60.h),
               Text(
                 'Enter your email to reset your password',

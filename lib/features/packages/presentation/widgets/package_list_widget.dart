@@ -23,8 +23,8 @@ class PackageListWidget extends StatelessWidget {
       filtered = packages;
     } else {
       filtered = packages
-        .where((p) => p.status.toLowerCase() == filter.toLowerCase())
-        .toList();
+          .where((p) => p.status.toLowerCase() == filter.toLowerCase())
+          .toList();
     }
 
     if (filtered.isEmpty) {

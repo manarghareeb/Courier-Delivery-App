@@ -61,29 +61,31 @@ class _AccountScreenState extends State<AccountScreen> {
                 onTap: () {
                   showDialog(
                     context: context,
-                    builder:
-                        (context) => AlertDialogWidget(
-                          title: 'Are you sure to delete your account?',
-                          onPressedYes: () async {
-                            try {
-                              User? user = FirebaseAuth.instance.currentUser;
-                              if (user != null) {
-                                final userId = user.uid;
-                                await FirebaseFirestore.instance.collection('users').doc(userId).delete();
-                                await user.delete();
-                                await CacheHelper.clearData();
-                                GoRouter.of(context).go(AppRouter.signUpScreen);
-                              }
-                            } catch (e) {
-                              print('Error deleting account: $e');
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text('Error deleting account: $e'),
-                                ),
-                              );
-                            }
-                          },
-                        ),
+                    builder: (context) => AlertDialogWidget(
+                      title: 'Are you sure to delete your account?',
+                      onPressedYes: () async {
+                        try {
+                          User? user = FirebaseAuth.instance.currentUser;
+                          if (user != null) {
+                            final userId = user.uid;
+                            await FirebaseFirestore.instance
+                                .collection('users')
+                                .doc(userId)
+                                .delete();
+                            await user.delete();
+                            await CacheHelper.clearData();
+                            GoRouter.of(context).go(AppRouter.signUpScreen);
+                          }
+                        } catch (e) {
+                          print('Error deleting account: $e');
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Error deleting account: $e'),
+                            ),
+                          );
+                        }
+                      },
+                    ),
                   );
                 },
               ),
@@ -94,15 +96,14 @@ class _AccountScreenState extends State<AccountScreen> {
                 onTap: () {
                   showDialog(
                     context: context,
-                    builder:
-                        (context) => AlertDialogWidget(
-                          title: 'Are you sure to logout?',
-                          onPressedYes: () async {
-                            await FirebaseAuth.instance.signOut();
-                            await CacheHelper.clearData();
-                            GoRouter.of(context).go(AppRouter.loginScreen);
-                          },
-                        ),
+                    builder: (context) => AlertDialogWidget(
+                      title: 'Are you sure to logout?',
+                      onPressedYes: () async {
+                        await FirebaseAuth.instance.signOut();
+                        await CacheHelper.clearData();
+                        GoRouter.of(context).go(AppRouter.loginScreen);
+                      },
+                    ),
                   );
                 },
               ),

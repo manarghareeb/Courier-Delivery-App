@@ -37,14 +37,12 @@ class OnPressedOnEditProfile extends StatelessWidget {
     final userId = user.uid;
     final docRef = FirebaseFirestore.instance.collection('users').doc(userId);
 
-    final updatedName =
-        nameController.text.trim().isEmpty
-            ? CacheHelper.getData('name') ?? ''
-            : nameController.text.trim();
-    final updatedPhone =
-        phoneController.text.trim().isEmpty
-            ? CacheHelper.getData('phone') ?? ''
-            : phoneController.text.trim();
+    final updatedName = nameController.text.trim().isEmpty
+        ? CacheHelper.getData('name') ?? ''
+        : nameController.text.trim();
+    final updatedPhone = phoneController.text.trim().isEmpty
+        ? CacheHelper.getData('phone') ?? ''
+        : phoneController.text.trim();
     final updatedPassword = passwordController.text.trim();
 
     final dataToUpdate = <String, dynamic>{

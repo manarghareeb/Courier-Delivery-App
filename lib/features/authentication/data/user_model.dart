@@ -23,6 +23,12 @@ class UserModel {
     );
   }
   toMap() {
-    return {'id': id,'name': name, 'email': email, 'phone': phone, 'password': password};
+    return {
+      'id': id,
+      'name': name,
+      'email': email,
+      'phone': phone,
+      'password': password
+    };
   }
 }

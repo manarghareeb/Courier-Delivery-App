@@ -10,12 +10,16 @@ import 'package:courier_delivery_app/features/deliveries/presentation/widgets/ad
 import 'package:courier_delivery_app/features/deliveries/presentation/widgets/drop_down_button_widget.dart';
 import 'package:courier_delivery_app/features/deliveries/presentation/widgets/package_info_section.dart';
 import 'package:courier_delivery_app/features/deliveries/presentation/widgets/receiver_info_section.dart';
+import 'package:courier_delivery_app/features/payments/data/manager/cubit/stripe_payment_cubit.dart';
+import 'package:courier_delivery_app/features/payments/data/models/payment_intent_input_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+
+import '../../../../core/errors/failures.dart';
 
 class DeliveriesScreen extends StatefulWidget {
   const DeliveriesScreen({super.key});
@@ -41,10 +45,14 @@ class _DeliveriesScreenState extends State<DeliveriesScreen> {
   TextEditingController locationController = TextEditingController();
   final locationKey = GlobalKey<FormState>();
 
-  final TextEditingController pickupLocationController = TextEditingController();
-  final TextEditingController dropOffLocationController = TextEditingController();
+  final TextEditingController pickupLocationController =
+      TextEditingController();
+  final TextEditingController dropOffLocationController =
+      TextEditingController();
   final pickupLocationKey = GlobalKey<FormState>();
   final dropOffLocationKey = GlobalKey<FormState>();
+
+  DeliveryModel? newDelivery;
 
   @override
   void dispose() {
@@ -67,13 +75,12 @@ class _DeliveriesScreenState extends State<DeliveriesScreen> {
         if (state is DeliveryError) {
           showDialog(
             context: context,
-            builder:
-                (context) => AlertDialogWidget(
-                  title: state.message,
-                  onPressedYes: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
+            builder: (context) => AlertDialogWidget(
+              title: state.message,
+              onPressedYes: () {
+                Navigator.of(context).pop();
+              },
+            ),
           );
         }
         if (state is DeliverySuccess) {
@@ -87,6 +94,7 @@ class _DeliveriesScreenState extends State<DeliveriesScreen> {
         }
       },
       builder: (context, state) {
+        final deliveryCubit = context.read<DeliveryCubit>();
         return ModalProgressHUD(
           inAsyncCall: state is DeliveryLoading,
           child: Scaffold(
@@ -185,79 +193,123 @@ class _DeliveriesScreenState extends State<DeliveriesScreen> {
                       SizedBox(height: 10.h),
                       DropDownButtonWidget(
                         hintText: 'Select Payment Method',
-                        types: ['Cash', 'Card', 'Online'],
+                        types: ['Cash', 'Stripe', 'PayPal'],
                         onChange: (value) {
                           context.read<DeliveryCubit>().setPaymentMethod(
-                            value!,
-                          );
+                                value!,
+                              );
                         },
                       ),
                       SizedBox(height: 40.h),
-                      CustomButtonWidget(
-                        buttonText: 'Comfirm',
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialogWidget(
-                                title: 'Are you sure for delivery?',
-                                onPressedYes: () {
-                                  Navigator.of(context).pop();
-                                  if (weightKey.currentState!.validate() &&
-                                      sizeKey.currentState!.validate() &&
-                                      contentsKey.currentState!.validate() &&
-                                      nameKey.currentState!.validate() &&
-                                      phoneKey.currentState!.validate() &&
-                                      addressKey.currentState!.validate() &&
-                                      locationKey.currentState!.validate() &&
-                                      pickupLocationKey.currentState!
-                                          .validate() &&
-                                      dropOffLocationKey.currentState!
-                                          .validate()) {
-                                    final deliveryCubit =
-                                        context.read<DeliveryCubit>();
-                                    final newDelivery = DeliveryModel(
-                                      id: '',
-                                      packageInfo: PackageInfo(
-                                        weight: weightController.text.trim(),
-                                        size: sizeController.text.trim(),
-                                        contents:
-                                            contentsController.text.trim(),
-                                      ),
-                                      receiverInfo: ReceiverInfo(
-                                        name: nameController.text.trim(),
-                                        phone: phoneController.text.trim(),
-                                        address: addressController.text.trim(),
-                                        location:
-                                            locationController.text.trim(),
-                                      ),
-                                      deliveryType:
-                                          deliveryCubit.deliveryType ??
-                                          'Standard',
-                                      paymentMethod:
-                                          deliveryCubit.paymentMethod ?? 'Cash',
-                                      pickupLocation:
-                                          pickupLocationController.text.trim(),
-                                      dropOffLocation:
-                                          dropOffLocationController.text.trim(),
-                                      totalPrice:
-                                          deliveryCubit.deliveryType ==
-                                                  'Express'
-                                              ? 20.0
-                                              : 10.0,
-                                      courierId: '',
-                                      status: 'pending',
-                                      userId:
-                                          FirebaseAuth
-                                              .instance
-                                              .currentUser!
-                                              .uid,
-                                      createdAt: null,
-                                    );
-                                    deliveryCubit.addDelivery(newDelivery);
-                                  }
-                                },
-                              );
+                      BlocConsumer<StripePaymentCubit, StripePaymentState>(
+                        listener: (context, state) {
+                          if (state is StripePaymentSuccess) {
+                            deliveryCubit.addDelivery(newDelivery!);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content:
+                                    Text('Payment successful. Delivery added!'),
+                                backgroundColor: Colors.green,
+                              ),
+                            );
+                          } else if (state is StripePaymentFailure) {
+                            final errorMessage = state.error is Failures
+                                ? (state.error as Failures).error
+                                : state.error.toString();
+                            print(errorMessage);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Payment failed: $errorMessage'),
+                                backgroundColor: Colors.red,
+                              ),
+                            );
+                          }
+                        },
+                        builder: (context, state) {
+                          return CustomButtonWidget(
+                            buttonText: state is StripePaymentLoading
+                                ? 'Processing Payment...'
+                                : 'Continue',
+                            onPressed: () async {
+                              if (weightKey.currentState!.validate() &&
+                                  sizeKey.currentState!.validate() &&
+                                  contentsKey.currentState!.validate() &&
+                                  nameKey.currentState!.validate() &&
+                                  phoneKey.currentState!.validate() &&
+                                  addressKey.currentState!.validate() &&
+                                  locationKey.currentState!.validate() &&
+                                  pickupLocationKey.currentState!.validate() &&
+                                  dropOffLocationKey.currentState!.validate()) {
+                                final paymentMethod =
+                                    deliveryCubit.paymentMethod ?? 'Cash';
+                                final newDelivery = DeliveryModel(
+                                  id: '',
+                                  packageInfo: PackageInfo(
+                                    weight: weightController.text.trim(),
+                                    size: sizeController.text.trim(),
+                                    contents: contentsController.text.trim(),
+                                  ),
+                                  receiverInfo: ReceiverInfo(
+                                    name: nameController.text.trim(),
+                                    phone: phoneController.text.trim(),
+                                    address: addressController.text.trim(),
+                                    location: locationController.text.trim(),
+                                  ),
+                                  deliveryType:
+                                      deliveryCubit.deliveryType ?? 'Standard',
+                                  paymentMethod: paymentMethod,
+                                  pickupLocation:
+                                      pickupLocationController.text.trim(),
+                                  dropOffLocation:
+                                      dropOffLocationController.text.trim(),
+                                  totalPrice:
+                                      deliveryCubit.deliveryType == 'Express'
+                                          ? 20.0
+                                          : 10.0,
+                                  courierId: '',
+                                  status: 'pending',
+                                  userId:
+                                      FirebaseAuth.instance.currentUser!.uid,
+                                  createdAt: null,
+                                );
+                                if (paymentMethod == 'stripe') {
+                                  final stripeCubit =
+                                      context.read<StripePaymentCubit>();
+                                  stripeCubit.makePayment(
+                                    paymentIntentInputModel:
+                                        PaymentIntentInputModel(
+                                            amount: '100',
+                                            currency: 'USD',
+                                            customerId: 'cus_TQeGTCEwTO1h3f'),
+                                  );
+                                  GoRouter.of(context).push(AppRouter.homeView);
+                                  deliveryCubit.addDelivery(newDelivery);
+                                } else if (paymentMethod == 'cash') {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialogWidget(
+                                        title: 'Are you sure for delivery?',
+                                        onPressedYes: () {
+                                          GoRouter.of(context).push(AppRouter.homeView);
+                                          deliveryCubit
+                                              .addDelivery(newDelivery);
+                                        },
+                                      );
+                                    },
+                                  );
+                                } else if (paymentMethod == 'paypal') {
+                                  /*ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text(
+                                          'PayPal payment not implemented yet.'),
+                                      backgroundColor: Colors.orange,
+                                    ),
+                                  );*/
+                                  GoRouter.of(context).push(AppRouter.homeView);
+                                  deliveryCubit.addDelivery(newDelivery);
+                                }
+                              }
                             },
                           );
                         },
@@ -273,4 +325,3 @@ class _DeliveriesScreenState extends State<DeliveriesScreen> {
     );
   }
 }
-

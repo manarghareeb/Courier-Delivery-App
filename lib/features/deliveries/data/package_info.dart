@@ -24,5 +24,4 @@ class PackageInfo {
       'contents': contents,
     };
   }
-
 }

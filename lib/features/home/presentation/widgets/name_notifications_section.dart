@@ -28,11 +28,10 @@ class NameNotificationsSection extends StatelessWidget {
         ),
         const Spacer(),
         IconButton(
-          icon: Icon(Icons.notifications),
-          onPressed: () {
-            GoRouter.of(context).push(AppRouter.notificationsScreen);
-          }
-        ),
+            icon: Icon(Icons.notifications),
+            onPressed: () {
+              GoRouter.of(context).push(AppRouter.notificationsScreen);
+            }),
       ],
     );
   }
