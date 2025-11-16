@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 part 'delivery_state.dart';
 
 class DeliveryCubit extends Cubit<DeliveryState> {
-  DeliveryCubit() : super(DeliveryCubitInitial());
+  DeliveryCubit() : super(DeliveryInitial());
 
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   final FirebaseAuth auth = FirebaseAuth.instance;
@@ -15,26 +15,35 @@ class DeliveryCubit extends Cubit<DeliveryState> {
 
   void setDeliveryType(String value) {
     deliveryType = value;
-    emit(DeliveryTypeChanged(value));
+    emit(DeliveryTypeSelected(value));
   }
 
   void setPaymentMethod(String value) {
     paymentMethod = value;
-    emit(PaymentMethodChanged(value));
+    emit(PaymentMethodSelected(value));
   }
 
   Future<void> addDelivery(DeliveryModel delivery) async {
     emit(DeliveryLoading());
     try {
       final userId = delivery.userId;
-      // generate id
       final docRef = await firestore
           .collection('users')
           .doc(userId)
           .collection('deliveries')
           .add(delivery.toJson());
       final deliveryWithId = delivery.copyWith(id: docRef.id);
-      // save in firestore
+
+      await firestore
+        .collection('users')
+        .doc(userId)
+        .collection('notifications')
+        .add({
+        'title': '📦 Delivery Created',
+        'body': 'Your delivery is being processed and will arrive soon!',
+        'createdAt': FieldValue.serverTimestamp(),
+      });
+
       await docRef.set(deliveryWithId.toJson());
       emit(DeliverySuccess(await fetchDeliveriesByUser(userId)));
     } catch (e) {
@@ -64,7 +73,7 @@ class DeliveryCubit extends Cubit<DeliveryState> {
 
     return querySnapshot.docs.map((doc) {
       final data = doc.data();
-      data['id'] = doc.id; 
+      data['id'] = doc.id;
       return DeliveryModel.fromJson(data);
     }).toList();
   }

@@ -16,10 +16,22 @@ class LoginCubit extends Cubit<AuthState> {
     try {
       emit(LoginLoading());
 
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
+      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email.text,
         password: password.text,
       );
+
+      final uid = userCredential.user!.uid;
+
+      await FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .collection('notifications')
+        .add({
+          'title': 'Welcome back 👋',
+          'body': 'Glad to see you again, ${email.text}!',
+          'createdAt': FieldValue.serverTimestamp(),
+        });
 
       await saveTheDatainSharedPref();
 
@@ -31,24 +43,6 @@ class LoginCubit extends Cubit<AuthState> {
     }
   }
 
-  /*saveTheDatainSharedPref() async {
-    String? docID = await getDocID();
-    log(docID.toString());
-    await FirebaseFirestore.instance
-        .collection("users")
-        .doc(docID)
-        .get()
-        .then((value) {
-      log(value.data().toString());
-      CacheHelper.saveData(key: "name", value: value.data()!["name"]);
-      CacheHelper.saveData(key: "email", value: value.data()!["email"]);
-      CacheHelper.saveData(key: "phone", value: value.data()!["phone"]);
-      log("-------------------");
-      log(CacheHelper.getData("name").toString());
-      log("-------------------");
-      log(CacheHelper.getData("email").toString());
-    });
-  }*/
   Future<void> saveTheDatainSharedPref() async {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) return;

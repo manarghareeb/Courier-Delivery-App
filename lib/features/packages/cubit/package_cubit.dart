@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:courier_delivery_app/features/deliveries/data/delivery_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -10,46 +11,29 @@ class PackageCubit extends Cubit<PackageState> {
   final firestore = FirebaseFirestore.instance;
   final auth = FirebaseAuth.instance;
 
-  Future<void> loadPackages() async {
+  Future<void> fetchPackages() async {
     emit(PackageLoading());
     try {
-      final user = auth.currentUser;
-      if (user == null) {
+      final userId = auth.currentUser?.uid;
+      if (userId == null) {
         emit(PackageError('User not logged in'));
         return;
       }
 
-      final snapshot =
+      final querySnapshot =
           await firestore
               .collection('users')
-              .doc(user.uid)
+              .doc(userId)
               .collection('deliveries')
               .get();
 
-      final pending = <Map<String, dynamic>>[];
-      final inTransit = <Map<String, dynamic>>[];
-      final delivered = <Map<String, dynamic>>[];
+      final packages =
+          querySnapshot.docs.map((doc) {
+            final data = doc.data();
+            return DeliveryModel.fromMap(data, doc.id);
+          }).toList();
 
-      for (var doc in snapshot.docs) {
-        final data = doc.data();
-        final status = data['status'] ?? 'Pending';
-
-        if (status == 'Pending') {
-          pending.add(data);
-        } else if (status == 'In Transit') {
-          inTransit.add(data);
-        } else if (status == 'Delivered') {
-          delivered.add(data);
-        }
-      }
-
-      emit(
-        PackageSuccess(
-          pending: pending,
-          inTransit: inTransit,
-          delivered: delivered,
-        ),
-      );
+      emit(PackageSuccess(packages));
     } catch (e) {
       emit(PackageError(e.toString()));
     }

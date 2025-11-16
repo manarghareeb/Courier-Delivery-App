@@ -7,7 +7,9 @@ class PackageInitial extends PackageState {}
 class PackageLoading extends PackageState {}
 
 class PackageSuccess extends PackageState {
-  final List<Map<String, dynamic>> pending;
+  final List<DeliveryModel> packages;
+  PackageSuccess(this.packages);
+  /*final List<Map<String, dynamic>> pending;
   final List<Map<String, dynamic>> inTransit;
   final List<Map<String, dynamic>> delivered;
 
@@ -15,7 +17,7 @@ class PackageSuccess extends PackageState {
     required this.pending,
     required this.inTransit,
     required this.delivered,
-  });
+  });*/
 }
 
 class PackageError extends PackageState {

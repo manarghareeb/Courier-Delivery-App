@@ -27,6 +27,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
   GlobalKey<FormState> emailformKey = GlobalKey<FormState>();
   GlobalKey<FormState> passformKey = GlobalKey<FormState>();
   GlobalKey<FormState> phoneformKey = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    emailController.dispose();
+    phoneController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<SignupCubit, AuthState>(
@@ -42,124 +52,123 @@ class _SignUpScreenState extends State<SignUpScreen> {
       },
       builder: (context, state) {
         return ModalProgressHUD(
-      inAsyncCall: state is SignUpLoading,
-      child: Scaffold(
-        body: SafeArea(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 40.h),
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Center(
-                    child: Text(
-                      'Packers & Movers',
-                      style: TextStyles.font32MainColorBold,
-                    ),
-                  ),
-                  SizedBox(height: 40.h),
-                  Text(
-                    'Let\'s get started',
-                    style: TextStyles.font20BlackBoldItalic.copyWith(
-                      color: Colors.black,
-                    ),
-                  ),
-                  Text(
-                    'Please input your details',
-                    style: TextStyles.font12GreyNormalItalic,
-                  ),
-                  SizedBox(height: 20.h),
-                  CustomTextFieldWidget(
-                    formKey: nameformKey,
-                    controller: nameController,
-                    hintText: 'Enter your Full Name',
-                    textInputType: TextInputType.name,
-                    title: "Name",
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return "Please enter your full name";
-                      }
-                      return null;
-                    },
-                  ),
-                  SizedBox(height: 10.h),
-                  CustomTextFieldWidget(
-                    formKey: emailformKey,
-                    controller: emailController,
-                    hintText: 'Enter your email',
-                    textInputType: TextInputType.emailAddress,
-                    title: 'Email',
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your Email';
-                      } else if (value.contains("@gmail.com") == false) {
-                        return 'this email is not valid "missing @gmail.com"';
-                      }
-                      return null;
-                    },
-                  ),
-                  SizedBox(height: 10.h),
-                  CustomTextFieldWidget(
-                    formKey: phoneformKey,
-                    controller: phoneController,
-                    hintText: 'Enter youe phone Number',
-                    textInputType: TextInputType.phone,
-                    title: 'Phone Number',
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return "Please enter your phone number";
-                      } else if (value.length != 11) {
-                        return "Phone number must be 11 digits";
-                      }
-                      return null;
-                    },
-                  ),
-                  SizedBox(height: 10.h),
-                  CustomTextFieldWidget(
-                    formKey: passformKey,
-                    controller: passwordController,
-                    hintText: 'Enter your password',
-                    textInputType: TextInputType.visiblePassword,
-                    obscureText: true,
-                    title: 'Password',
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return "Enter your password";
-                      } else if (value.length < 6) {
-                        return "Password must be at least 6 characters";
-                      }
-                      return null;
-                    },
-                  ),
-                  SizedBox(height: 30.h),
-                  CustomButtonWidget(
-                    buttonText: 'SignUp',
-                    onPressed: () {
-                      if (nameformKey.currentState!.validate() &&
-                          emailformKey.currentState!.validate() &&
-                          passformKey.currentState!.validate() &&
-                          phoneformKey.currentState!.validate()) {
+          inAsyncCall: state is SignUpLoading,
+          child: Scaffold(
+            body: SafeArea(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 40.h),
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Center(
+                        child: Text(
+                          'Packers & Movers',
+                          style: TextStyles.font32MainColorBold,
+                        ),
+                      ),
+                      SizedBox(height: 40.h),
+                      Text(
+                        'Let\'s get started',
+                        style: TextStyles.font20BlackBoldItalic.copyWith(
+                          color: Colors.black,
+                        ),
+                      ),
+                      Text(
+                        'Please input your details',
+                        style: TextStyles.font12GreyNormalItalic,
+                      ),
+                      SizedBox(height: 20.h),
+                      CustomTextFieldWidget(
+                        formKey: nameformKey,
+                        controller: nameController,
+                        hintText: 'Enter your Full Name',
+                        textInputType: TextInputType.name,
+                        title: "Name",
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Please enter your full name";
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 10.h),
+                      CustomTextFieldWidget(
+                        formKey: emailformKey,
+                        controller: emailController,
+                        hintText: 'Enter your email',
+                        textInputType: TextInputType.emailAddress,
+                        title: 'Email',
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your Email';
+                          } else if (value.contains("@gmail.com") == false) {
+                            return 'this email is not valid "missing @gmail.com"';
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 10.h),
+                      CustomTextFieldWidget(
+                        formKey: phoneformKey,
+                        controller: phoneController,
+                        hintText: 'Enter youe phone Number',
+                        textInputType: TextInputType.phone,
+                        title: 'Phone Number',
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Please enter your phone number";
+                          } else if (value.length != 11) {
+                            return "Phone number must be 11 digits";
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 10.h),
+                      CustomTextFieldWidget(
+                        formKey: passformKey,
+                        controller: passwordController,
+                        hintText: 'Enter your password',
+                        textInputType: TextInputType.visiblePassword,
+                        obscureText: true,
+                        title: 'Password',
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Enter your password";
+                          } else if (value.length < 6) {
+                            return "Password must be at least 6 characters";
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 30.h),
+                      CustomButtonWidget(
+                        buttonText: 'SignUp',
+                        onPressed: () {
+                          if (nameformKey.currentState!.validate() &&
+                              emailformKey.currentState!.validate() &&
+                              passformKey.currentState!.validate() &&
+                              phoneformKey.currentState!.validate()) {
                             final signupCubit = context.read<SignupCubit>();
                             signupCubit.name.text = nameController.text;
                             signupCubit.email.text = emailController.text;
                             signupCubit.password.text = passwordController.text;
                             signupCubit.phone.text = phoneController.text;
                             signupCubit.signupAccount();
-                      }
-                    },
+                          }
+                        },
+                      ),
+                      SizedBox(height: 20.h),
+                      const AlreadyHaveAccount(),
+                    ],
                   ),
-                  SizedBox(height: 20.h),
-                  const AlreadyHaveAccount(),
-                ],
+                ),
               ),
             ),
           ),
-        ),
-      ),
-    );
+        );
       },
     );
-    
   }
 }

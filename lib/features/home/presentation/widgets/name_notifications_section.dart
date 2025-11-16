@@ -5,9 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class NameNotificationsSection extends StatelessWidget {
-  const NameNotificationsSection({
-    super.key,
-  });
+  const NameNotificationsSection({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,10 +28,10 @@ class NameNotificationsSection extends StatelessWidget {
         ),
         const Spacer(),
         IconButton(
+          icon: Icon(Icons.notifications),
           onPressed: () {
             GoRouter.of(context).push(AppRouter.notificationsScreen);
-          },
-          icon: Icon(Icons.notifications),
+          }
         ),
       ],
     );
