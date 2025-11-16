@@ -1,4 +1,5 @@
 import 'package:courier_delivery_app/core/widgets/custom_text_field_widget.dart';
+import 'package:courier_delivery_app/features/deliveries/presentation/widgets/address_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -58,10 +59,9 @@ class ReceiverInfoSection extends StatelessWidget {
           },
         ),
         SizedBox(height: 10.h),
-        CustomTextFieldWidget(
+        AddressTextField(
           controller: addressController,
           hintText: 'Address Details',
-          textInputType: TextInputType.text,
           title: 'Address Details',
           formKey: addressKey,
           validator: (value) {
@@ -72,10 +72,9 @@ class ReceiverInfoSection extends StatelessWidget {
           },
         ),
         SizedBox(height: 10.h),
-        CustomTextFieldWidget(
+        AddressTextField(
           controller: locationController,
           hintText: 'Location',
-          textInputType: TextInputType.text,
           title: 'Location',
           formKey: locationKey,
           validator: (value) {

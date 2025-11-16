@@ -17,7 +17,6 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeView> {
-  //final userId = FirebaseAuth.instance.currentUser!.uid;
 
   late int index;
   List<Widget> screens = [
@@ -33,25 +32,7 @@ class _HomeScreenState extends State<HomeView> {
     super.initState();
     index = widget.initialIndex; 
   }
-  /*late int index;
-  late List<Widget> screens;
-  late String userId;
-
-  @override
-  void initState() {
-    super.initState();
-    index = widget.initialIndex;
-    userId = FirebaseAuth.instance.currentUser!.uid;
-    screens = [
-      const HomeScreen(),
-      const PackagesScreen(),
-      const DeliveriesScreen(),
-      CouriersScreen(userId: userId),
-      const AccountScreen(),
-    ];
-  }*/
-
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
